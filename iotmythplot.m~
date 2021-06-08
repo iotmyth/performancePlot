@@ -1,6 +1,6 @@
 format longG
 
-data = readtable('resp3.csv', 'ReadVariableNames', false, 'HeaderLines', 1);
+data = readtable('resp.csv', 'ReadVariableNames', false, 'HeaderLines', 1);
 
 % ini untuk format date seperti halnya di jmeter ya
 % x = seconds((datenum(datestr(data.ElapsedTime, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000);
@@ -24,20 +24,19 @@ legend_base_name = 'data-';
 x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000/60;
 hold on
 title('Any Plot');
-xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',12,'FontWeight','bold');
+xlabel('Elapsed time (minutes)','FontSize',12,'FontWeight','bold');
 ylabel(ylabels3,'FontSize',12,'FontWeight','bold');
 
 if(size(data,2) == 2)
     markers = {'.'};
     colors = {'r'};
-    ylabel(ylabels,'FontSize',12,'FontWeight','bold');
 
 end
 
 for i=1:size(data,2)-1
-    if(size(data,2) <= 2)
-        % ini untuk khusus yang 1 kolom saja
-        scatter(x,data{:,i+1},strcat(colors{color_counter},markers{marker_counter}),'DisplayName',strcat(legend_base_name,sprintf('%.0f',i)));
+    if(size(data,2) == 2)
+        %for 1 
+        scatter(x,data{:,i+1},strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width,'DisplayName',strcat(legend_base_name,sprintf('%.0f',i)));
     else
         plot(x,data{:,i+1},strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width,'DisplayName',strcat(legend_base_name,sprintf('%.0f',i)));
     end  
