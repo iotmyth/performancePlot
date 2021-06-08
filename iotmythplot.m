@@ -1,14 +1,14 @@
 format longG
 
-data = readtable('nice.csv', 'ReadVariableNames', false, 'HeaderLines', 2);
+data = readtable('resp.csv', 'ReadVariableNames', false, 'HeaderLines', 1);
 
 % ini untuk format date seperti halnya di jmeter ya
 % x = seconds((datenum(datestr(data.ElapsedTime, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000);
 % x.Format = 'hh:mm:ss';
 
-markers = {'+','*','.','o','x','v','d','^','s','>','<','v','p','h'};
-colors = {'r','b','m','k','y','c','g'};
-lines = {'-','--',':','-.'};
+markers = {'+','*','.','o','x','v','d','^','s','>','<','v','p','h','p','v','<','>','s','^','d','v','x','o','.','*'};
+colors = {'r','b','m','k','y','c','g','c','y','k','m','b'};
+lines = {'-','--',':','-.',':','--'};
 line_width = 0.9;
 marker_size = 5;
 marker_counter = 1;
