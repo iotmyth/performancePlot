@@ -1,6 +1,6 @@
 format longG
 
-data = readtable('resp3.csv', 'ReadVariableNames', false, 'HeaderLines', 1);
+data = readtable('rx.csv', 'ReadVariableNames', false, 'HeaderLines', 2);
 
 % ini untuk format date seperti halnya di jmeter ya
 % x = seconds((datenum(datestr(data.ElapsedTime, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000);
@@ -22,6 +22,7 @@ legend_base_name = 'data-';
 
 % kalo ini format number dalam menit
 x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000/60;
+%x = data{:,1};
 hold on
 title('Any Plot');
 xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',12,'FontWeight','bold');
