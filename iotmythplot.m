@@ -20,9 +20,12 @@ ylabels2='Mega Bytes (MB)';
 ylabels3='TCP Connections';
 legend_base_name = 'data-';
 
-% kalo ini format number dalam menit
+% kalo ini format number dalam menit elapsed time
 x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000/60;
+
+% ini untuk data x yang pure number aja, bukan elapsed time
 %x = data{:,1};
+
 hold on
 title('Any Plot');
 xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',12,'FontWeight','bold');
