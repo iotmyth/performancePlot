@@ -22,13 +22,13 @@ legend_base_name = 'HTTP Request-';
 
 % kalo ini format number dalam menit elapsed time
 x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000/60;
+
 % ini untuk data x yang pure number aja, bukan elapsed time
 %x = data{:,1};
 
 hold on
 h = figure;
-figure('DefaultTextFontName', 'Goethe', 'DefaultAxesFontName', 'Goethe','DefaultAxesFontSize',16);
-axes;
+
 if(size(data,2) == 2)
     markers = {'.'};
     colors = {'r'};
@@ -76,9 +76,9 @@ ax = gca;
 ax.YAxis.Exponent = 0;
 legend('show');
 set(h,'Units','Inches');
-title('HTTP Response Times over Time','FontSize',16);
-xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',16);
-ylabel(ylabels,'FontSize',16);
+title('HTTP Response Times over Time','Inter);
+xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',12);
+ylabel(ylabels,'FontSize',12);
 pos = get(h,'Position');
 set(h,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)])
 print(h,'hasilgrafik/1a','-dpdf','-r0')
