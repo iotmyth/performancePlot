@@ -1,13 +1,15 @@
 format longG
 
-data = readtable('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/4/ResponseTimesOverTime.csv', 'ReadVariableNames', false, 'HeaderLines', 1);
+stringCSV = 'LatenciesOverTime';
+dataID = '4';
+data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/4/',strcat(stringCSV,'.csv'), 'ReadVariableNames', false, 'HeaderLines', 1);
 
 % ini untuk format date seperti halnya di jmeter ya
 % x = seconds((datenum(datestr(data.ElapsedTime, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000);
 % x.Format = 'hh:mm:ss';
 
 markers = {'+','*','.','o','x','v','d','^','s','>','<','v','p','h','p','v','<','>','s','^','d','v','x','o','.','*'};
-colors = {'r','b','m','k','y','c','g','c','y','k','m','b'};
+colors = {'r','b','m','k','y','c','g','r','b','m','k','y'};
 lines = {'-','--',':','-.',':','--'};
 line_width = 0.9;
 marker_size = 5;
@@ -18,7 +20,9 @@ ylabels='Response times (ms)';
 ylabels1='Number of threads';
 ylabels2='Mega Bytes (MB)';
 ylabels3='TCP connections';
+ythread='Number of active threads';
 legend_base_name = 'HTTP Request-';
+
 
 % kalo ini format number dalam menit elapsed time
 x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000/60;
@@ -30,7 +34,7 @@ hold on
 if(size(data,2) == 2)
     markers = {'.'};
     colors = {'r'};
-    ylabel(ylabels,'FontSize',16);
+    ylabel(ylabels,'FontSize',14);
 end
 
 for i=1:size(data,2)-1
@@ -69,12 +73,20 @@ ax.YAxis.Exponent = 0;
 ax.GridLineStyle = ':';
 ax.GridAlpha = 0.3;
 ax.LineWidth = 0.9;
+
 legend('show');
+lgd = legend;
+% lgd.FontSize=7;
+% lgd.Location = 'northWest';
+
 set(gcf,'Units','Inches');
 
-title('HTTP Response Times over Time','FontSize',16);
-xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',16);
-ylabel(ylabels,'FontSize',16);
+%title({'Threads State over Time (1M RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'HTTP Response Times over Time (50K RPS)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+title({'HTTP Latencies over Time (50K RPS)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+
+xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',14);
+ylabel(ylabels,'FontSize',14);
 pos = get(gcf,'Position');
 set(findall(gcf,'-property','FontName'),'FontName','Times New Roman');
 set(gcf,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);
