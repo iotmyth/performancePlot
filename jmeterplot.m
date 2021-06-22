@@ -1,6 +1,6 @@
 format longG
 
-stringCSV = 'ResponseCodesPerSecond';
+stringCSV = 'thread';
 dataID = '4';
 data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/4/',strcat(stringCSV,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 1);
 
@@ -104,7 +104,7 @@ ylabel(ylabelslat,'FontSize',15);
 pos = get(gcf,'Position');
 set(findall(gcf,'-property','FontName'),'FontName','Times New Roman');
 set(gcf,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);
-print(gcf,'-dpdf',strcat('hasilgrafik/',strcat(dataID,stringCSV)),'-r0');
+% print(gcf,'-dpdf',strcat('hasilgrafik/',strcat(dataID,stringCSV)),'-r0');
 % print -dpdf -painters hasilgrafik/1a
 hold off;
 
