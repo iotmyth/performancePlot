@@ -1,47 +1,27 @@
-format longG
+function [vals, freqs] = pmf(X)
+%#PMF Return the probability mass function for a vector/matrix.
+%#
+%#INPUTS:
+%#   X       Input matrix
+%#
+%#OUTPUTS:
+%#   VALS    Vector of unique values
+%#   FREQS   Vector of frequencies of occurence of each value.
+%#
 
-data = readtable('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/4/LatenciesOverTime.csv', 'ReadVariableNames', false, 'HeaderLines', 1);
+    [vals,junk,idx] = unique(X);
 
-% ini untuk format date seperti halnya di jmeter ya
-% x = seconds((datenum(datestr(data.ElapsedTime, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000);
-% x.Format = 'hh:mm:ss';
+    vals   = vals(:);
+    frequs = NaN(length(vals),1);
 
-markers = {'+','*','.','o','x','v','d','^','s','>','<','v','p','h','p','v','<','>','s','^','d','v','x','o','.','*'};
-colors = {'r','b','m','k','y','c','g','c','y','k','m','b'};
-lines = {'-','--',':','-.',':','--'};
-line_width = 0.9;
-marker_size = 5;
-marker_counter = 1;
-color_counter = 1;
-line_counter = 1;
-ylabels='Response Time (ms)';
-ylabels1='Number of Threads';
-ylabels2='Mega Bytes (MB)';
-ylabels3='TCP Connections';
-legend_base_name = 'data-';
-
-% kalo ini format number dalam menit elapsed time
-% x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000/60;
-
-% ini untuk data x yang pure number aja, bukan elapsed time
-x = data{:,2};
-
-hold on
-title('Any Plot');
-xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',12,'FontWeight','bold');
-ylabel(ylabels3,'FontSize',12,'FontWeight','bold');
-disp(data)
-pmfs=zeros(size(x(:))); 
-    for i=1:length(x) 
-        pmfs(i)= sum(px(find(sx==x(i)))); 
+    for i = 1:length(vals)
+        freqs(i) = mean(idx == i);
     end
-% pmfs = histcounts(data{:,2},[unique(data{:,2}) Inf],'Normalization','probability');
-histogram(pmfs);
 
+    %# If 0 or 1 output is requested, put the values and counts in two columns
+    %# of a matrix.
+    if nargout < 2
+        vals = [vals freqs];
+    end
 
-
-box on;
-ax = gca;
-ax.YAxis.Exponent = 0;
-legend('show');
-hold off
+end
