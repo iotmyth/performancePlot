@@ -1,6 +1,6 @@
 format longG
 
-stringCSV = 'BytesThroughputOverTime';
+stringCSV = 'ResponseCodesPerSecond';
 dataID = '4';
 data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/4/',strcat(stringCSV,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 1);
 
@@ -23,8 +23,8 @@ ylabels2='Mega Bytes (MB)';
 ylabelstruput='Mega Bytes (MB) per second';
 ylabels3='TCP connections';
 ythread='Number of active threads';
-legend_base_name = 'Worker-';
-% legend_base_name = 'HTTP Request-';
+%legend_base_name = 'Worker-';
+legend_base_name = 'HTTP Request-';
 
 
 % kalo ini format number dalam menit elapsed time
@@ -44,9 +44,9 @@ for i=1:size(data,2)-1
         % ini untuk khusus yang 1 kolom saja
         scatter(x,data{:,i+1},strcat(colors{color_counter},markers{marker_counter}),'DisplayName',strcat(legend_base_name,sprintf('%.0f',i)));
     else
-        if(strcmp(stringCSV, 'BytesThroughputOverTime'))
+        if(strcmp(stringCSV, 'BytesThroughputOverTime') || strcmp(stringCSV,'ResponseCodesPerSecond'))
             markers = {'.'};
-            colors = {'r','b'};
+            colors = {'r','b','g','m'};
             ylabel(ylabels,'FontSize',14);
             scatter(x,data{:,i+1}/1000000,strcat(colors{color_counter},markers{marker_counter}));
         else
@@ -82,24 +82,25 @@ ax.YAxis.Exponent = 0;
 ax.GridLineStyle = ':';
 ax.GridAlpha = 0.3;
 ax.LineWidth = 0.9;
+set(gca,'FontSize',16)
 
-if(strcmp(stringCSV, 'BytesThroughputOverTime'))
+if(strcmp(stringCSV, 'BytesThroughputOverTime') || strcmp(stringCSV,'ResponseCodesPerSecond'))
     legend('Bytes received per second','Bytes sent per second');
 end
 legend('show');
 lgd = legend;
-% lgd.FontSize=7;
+%lgd.FontSize=7;
 %lgd.Location = 'northWest';
 
 set(gcf,'Units','Inches');
 
 %title({'Threads State over Time (50K RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
 %title({'HTTP Response Times over Time (50K RPS)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'HTTP Latencies over Time (50K RPS)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-title({'Bytes Throughput over Time (50K RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+title({'HTTP Latencies over Time (50K RPS)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+%title({'Bytes Throughput over Time (50K RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',15);
 
-xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',14);
-ylabel(ylabelstruput,'FontSize',14);
+xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',15);
+ylabel(ylabelslat,'FontSize',15);
 pos = get(gcf,'Position');
 set(findall(gcf,'-property','FontName'),'FontName','Times New Roman');
 set(gcf,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);

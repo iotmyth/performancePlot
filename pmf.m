@@ -1,6 +1,6 @@
 format longG
 
-data = readtable('rx.csv', 'ReadVariableNames', false, 'HeaderLines', 1);
+data = readtable('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/4/LatenciesOverTime.csv', 'ReadVariableNames', false, 'HeaderLines', 1);
 
 % ini untuk format date seperti halnya di jmeter ya
 % x = seconds((datenum(datestr(data.ElapsedTime, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000);
@@ -21,17 +21,21 @@ ylabels3='TCP Connections';
 legend_base_name = 'data-';
 
 % kalo ini format number dalam menit elapsed time
-x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000/60;
+% x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000/60;
 
 % ini untuk data x yang pure number aja, bukan elapsed time
-%x = data{:,1};
+x = data{:,2};
 
 hold on
 title('Any Plot');
 xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',12,'FontWeight','bold');
 ylabel(ylabels3,'FontSize',12,'FontWeight','bold');
-
-pmfs = histcounts(data{:,2},[unique(data{:,2}) Inf],'Normalization','probability');
+disp(data)
+pmfs=zeros(size(x(:))); 
+    for i=1:length(x) 
+        pmfs(i)= sum(px(find(sx==x(i)))); 
+    end
+% pmfs = histcounts(data{:,2},[unique(data{:,2}) Inf],'Normalization','probability');
 histogram(pmfs);
 
 
