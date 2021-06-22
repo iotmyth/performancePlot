@@ -1,8 +1,9 @@
 format longG
 
-stringCSV = 'ResponseCodesPerSecond';
+stringCSV = 'PodCount-data-2021-06-0423_43_21';
 dataID = '4';
-data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/4/',strcat(stringCSV,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 1);
+namespace = 'iotmyth';
+data = readtable(strcat(strcat(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/',dataID),'/'),strcat(strcat(strcat(namespace,'/'),stringCSV),'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
 
 % ini untuk format date seperti halnya di jmeter ya
 % x = seconds((datenum(datestr(data.ElapsedTime, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000);
@@ -10,7 +11,7 @@ data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/
 
 markers = {'+','*','.','o','x','v','d','^','s','>','<','v','p','h','p','v','<','>','s','^','d','v','x','o','.','*'};
 colors = {'r','b','m','k','y','c','g','r','b','m','k','y'};
-lines = {'-','--',':','-.',':','--'};
+lines = {'-.','-','--',':',':','--'};
 line_width = 0.9;
 marker_size = 5;
 marker_counter = 1;
@@ -34,25 +35,13 @@ x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(da
 
 hold on
 if(size(data,2) == 2)
-    markers = {'.'};
+    markers = {'*'};
     colors = {'r'};
     ylabel(ylabels,'FontSize',14);
 end
 
 for i=1:size(data,2)-1
-    if(size(data,2) <= 2)
-        % ini untuk khusus yang 1 kolom saja
-        scatter(x,data{:,i+1},strcat(colors{color_counter},markers{marker_counter}),'DisplayName',strcat(legend_base_name,sprintf('%.0f',i)));
-    else
-        if(strcmp(stringCSV, 'BytesThroughputOverTime') || strcmp(stringCSV,'ResponseCodesPerSecond'))
-            markers = {'.'};
-            colors = {'r','b','g','m'};
-            ylabel(ylabels,'FontSize',14);
-            scatter(x,data{:,i+1}/1000000,strcat(colors{color_counter},markers{marker_counter}));
-        else
-            plot(x,data{:,i+1},strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width,'DisplayName',strcat(legend_base_name,sprintf('%.0f',i)));
-        end
-    end  
+            plot(x,data{:,i+1},strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width,'DisplayName',strcat(legend_base_name,sprintf('%.0f',i)),'MarkerIndices',1:10:length(data{:,i+1}));
 
       if mod(i,  size(markers,2)) == 0
          marker_counter = 1;
@@ -83,14 +72,10 @@ ax.GridLineStyle = ':';
 ax.GridAlpha = 0.3;
 ax.LineWidth = 0.9;
 set(gca,'FontSize',16)
-
-if(strcmp(stringCSV, 'BytesThroughputOverTime') || strcmp(stringCSV,'ResponseCodesPerSecond'))
-    legend('Bytes received per second','Bytes sent per second');
-end
 legend('show');
 lgd = legend;
 %lgd.FontSize=7;
-%lgd.Location = 'northWest';
+lgd.Location = 'northWest';
 
 set(gcf,'Units','Inches');
 
@@ -102,6 +87,9 @@ title({'HTTP Latencies over Time (50K RPS)','Instance Type (m5.xlarge/m5a.xlarge
 xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',15);
 ylabel(ylabelslat,'FontSize',15);
 pos = get(gcf,'Position');
+a = max(data{:,2});
+ylim([0,a(1)*1.2])
+xlim([0,max(x)])
 set(findall(gcf,'-property','FontName'),'FontName','Times New Roman');
 set(gcf,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);
 print(gcf,'-dpdf',strcat('hasilgrafik/',strcat(dataID,stringCSV)),'-r0');
