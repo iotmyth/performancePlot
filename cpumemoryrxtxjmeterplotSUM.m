@@ -87,7 +87,7 @@ ylim([0,max(B(:,size(B,2)))*1.2])
 pos = get(gcf,'Position');
 set(findall(gcf,'-property','FontName'),'FontName','Times New Roman');
 set(gcf,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);
-print(gcf,'-dpdf',strcat('hasilgrafik/',strcat(dataID,stringCSV)),'-r0');
+print(gcf,'-dpdf',strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/hasilgrafik/',strcat(dataID,stringCSV)),'-r0');
 % print -dpdf -painters hasilgrafik/1a
 hold off;
 

@@ -1,6 +1,6 @@
 format longG
 
-stringCSV = 'CPU-data-as-seriestocolumns-2021-06-0423_45_20';
+stringCSV = 'Memory-data-as-seriestocolumns-2021-06-0423_45_46';
 dataID = '4';
 namespace = 'iotmyth';
 data = readtable(strcat(strcat(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/',dataID),'/'),strcat(strcat(strcat(namespace,'/'),stringCSV),'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
@@ -27,7 +27,7 @@ ylabelstruput='Mega Bytes (MB) per second';
 ylabels3='TCP connections';
 ythread='Number of active threads';
 %legend_base_name = 'Worker-';
-legend_base_name = 'iotmyth-pods-';
+legend_base_name = 'iotmyth-pod-';
 % legend_base_name = 'iotmyth-cpu-';
 %legend_base_name = 'iotmyth-memory-';
 
@@ -45,7 +45,7 @@ if(size(data,2) == 2)
 end
 
 for i=1:size(data,2)-1
-            plot(x,data{:,i+1},strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width,'DisplayName',strcat(legend_base_name,sprintf('%.0f',i)));
+            plot(x,data{:,i+1}/1000000,strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width,'DisplayName',strcat(legend_base_name,sprintf('%.0f',i)));
 
       if mod(i,  size(markers,2)) == 0
          marker_counter = 1;
@@ -85,21 +85,21 @@ set(gcf,'Units','Inches');
 
 %title({'Pod Count: iotmyth (HTTP 50K RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
 %title({'CPU SUM: iotmyth (HTTP 50K RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
-title({'CPU: iotmyth (HTTP 50K RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
-% title({'Memory: iotmyth (HTTP 50K RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'CPU: iotmyth (HTTP 50K RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+title({'Memory: iotmyth (HTTP 50K RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
 %title({'HTTP Response Times over Time (50K RPS)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'HTTP Latencies over Time (50K RPS)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Bytes Throughput over Time (50K RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',15);
 
 xlabel('Elapsed time (minutes)','FontSize',15);
-ylabel(ylabelscpusum,'FontSize',15);
+ylabel(ylabels2,'FontSize',15);
 pos = get(gcf,'Position');
 ymax = max(data{:,2});
 % ylim([0,ymax(1)*1.2])
 % xlim([min(x),max(x)])
 set(findall(gcf,'-property','FontName'),'FontName','Times New Roman');
 set(gcf,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);
-print(gcf,'-dpdf',strcat('hasilgrafik/',strcat(dataID,stringCSV)),'-r0');
+print(gcf,'-dpdf',strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/hasilgrafik/',strcat(dataID,stringCSV)),'-r0');
 % print -dpdf -painters hasilgrafik/1a
 hold off;
 
