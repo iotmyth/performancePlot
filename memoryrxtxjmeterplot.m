@@ -1,8 +1,8 @@
 format longG
 
-stringCSV = 'thread';
-dataID = '4';
-data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/4/',strcat(stringCSV,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 1);
+stringCSV = 'Memory-data-as-seriestocolumns-2021-06-0423_45_46';
+dataID = '4SUM';
+data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/4/iotmyth/',strcat(stringCSV,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
 
 % ini untuk format date seperti halnya di jmeter ya
 % x = seconds((datenum(datestr(data.ElapsedTime, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000);
@@ -39,7 +39,7 @@ x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(da
 % A = rand(1000, 4);  % Test data
 B = [A, sum(A, 2)];
 
-disp(B(:,5));
+disp(B(:,16));
 
 hold on
 if(size(data,2) == 2)
@@ -48,7 +48,7 @@ if(size(data,2) == 2)
     ylabel(ylabels,'FontSize',14);
 end
 
-plot(x,B(:,5),strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width,'DisplayName',strcat(legend_base_name,''));
+plot(x,B(:,16),strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width,'DisplayName',strcat(legend_base_name,''));
 
 box on;
 grid on;
@@ -70,7 +70,7 @@ lgd = legend;
 
 set(gcf,'Units','Inches');
 
-%title({'Threads State over Time (50K RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+title({'SUM Threads State over Time (50K RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
 %title({'HTTP Response Times over Time (50K RPS)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'HTTP Latencies over Time (50K RPS)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Bytes Throughput over Time (50K RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',15);
@@ -82,7 +82,7 @@ ylim([0,max(B(:,5))*1.2])
 pos = get(gcf,'Position');
 set(findall(gcf,'-property','FontName'),'FontName','Times New Roman');
 set(gcf,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);
-% print(gcf,'-dpdf',strcat('hasilgrafik/',strcat(dataID,stringCSV)),'-r0');
+print(gcf,'-dpdf',strcat('hasilgrafik/',strcat(dataID,stringCSV)),'-r0');
 % print -dpdf -painters hasilgrafik/1a
 hold off;
 
