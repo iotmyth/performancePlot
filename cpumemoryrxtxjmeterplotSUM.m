@@ -17,14 +17,15 @@ marker_counter = 1;
 color_counter = 1;
 line_counter = 1;
 ylabels='Response times (ms)';
-ylabelslat = 'Number of active threads';
+ylabelslat = 'Mega Bytes (MB)';
+ylabelscpu='Number of core CPU';
 ylabels1='Number of threads';
 ylabels2='Mega Bytes (MB)';
 ylabelstruput='Mega Bytes (MB) per second';
 ylabels3='TCP connections';
 ythread='Number of active threads';
 %legend_base_name = 'Worker-';
-legend_base_name = 'All workers';
+legend_base_name = 'All pods';
 
 
 % kalo ini format number dalam menit elapsed time
@@ -36,10 +37,13 @@ x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(da
    temp_data = data;
      temp_data(:,1) = [];
    A = table2array(temp_data);
+   A(isnan(A))=0;
 % A = rand(1000, 4);  % Test data
-B = [A, sum(A, 2)];
+B = [A, sum(A, 2)/1000000];
+B(isnan(B))=0;
 
-disp(B(:,16));
+% disp(B(:,16));
+% disp(size(B,2));
 
 hold on
 if(size(data,2) == 2)
@@ -48,7 +52,7 @@ if(size(data,2) == 2)
     ylabel(ylabels,'FontSize',14);
 end
 
-plot(x,B(:,16),strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width,'DisplayName',strcat(legend_base_name,''));
+plot(x,B(:,size(B,2)),strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width,'DisplayName',strcat(legend_base_name,''));
 
 box on;
 grid on;
@@ -70,14 +74,15 @@ lgd = legend;
 
 set(gcf,'Units','Inches');
 
-title({'SUM Threads State over Time (50K RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+title({'Memory SUM: iotmyth (HTTP 50K RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'CPU SUM: iotmyth (HTTP 50K RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
 %title({'HTTP Response Times over Time (50K RPS)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'HTTP Latencies over Time (50K RPS)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Bytes Throughput over Time (50K RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',15);
 
 xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',15);
 ylabel(ylabelslat,'FontSize',15);
-ylim([0,max(B(:,5))*1.2])
+ylim([0,max(B(:,size(B,2)))*1.2])
 % xlim([min(x),max(x)])
 pos = get(gcf,'Position');
 set(findall(gcf,'-property','FontName'),'FontName','Times New Roman');

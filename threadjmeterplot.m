@@ -38,6 +38,7 @@ x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(da
    A = table2array(temp_data);
 % A = rand(1000, 4);  % Test data
 B = [A, sum(A, 2)];
+% B(isnan(B))=0;
 
 disp(B(:,5));
 

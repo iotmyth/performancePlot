@@ -50,7 +50,7 @@ for i=1:size(data,2)-1
             markers = {'.'};
             colors = {'r','b','g','m'};
             ylabel(ylabels,'FontSize',14);
-            plot(x,data{:,i+1},strcat(colors{color_counter},markers{marker_counter}),'MarkerSize',marker_size);
+          plot(x,data{:,i+1},strcat(colors{color_counter},markers{marker_counter}),'MarkerSize',marker_size);
         else
             plot(x,data{:,i+1},strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width,'DisplayName',strcat(legend_base_name,sprintf('%.0f',i)));
         end
@@ -88,11 +88,11 @@ set(gca,'FontSize',16)
 
 if(strcmp(stringCSV, 'BytesThroughputOverTime') || strcmp(stringCSV,'ResponseCodesPerSecond'))
 %     legend('Bytes received per second','Bytes sent per second');
-    legend('success','502','504','timeout');
+    legend('200 OK','502 Bad Gateway','504 Gateway Timeout','Non HTTP Timeout');
 end
 legend('show');
 lgd = legend;
-%lgd.FontSize=7;
+lgd.FontSize=10;
 %lgd.Location = 'northWest';
 
 set(gcf,'Units','Inches');
@@ -111,4 +111,5 @@ set(gcf,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), po
 print(gcf,'-dpdf',strcat('hasilgrafik/',strcat(dataID,stringCSV)),'-r0');
 % print -dpdf -painters hasilgrafik/1a
 hold off;
+
 
