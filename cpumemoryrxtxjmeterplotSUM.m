@@ -1,6 +1,6 @@
 format longG
 
-stringCSV = 'Memory-data-as-seriestocolumns-2021-06-0423_45_46';
+stringCSV = 'CPUsum-data-2021-06-0423_44_07';
 dataID = '4SUM';
 data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/4/iotmyth/',strcat(stringCSV,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
 
@@ -39,7 +39,7 @@ x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(da
    A = table2array(temp_data);
    A(isnan(A))=0;
 % A = rand(1000, 4);  % Test data
-B = [A, sum(A, 2)/1000000];
+B = [A, sum(A, 2)]; %1000000
 B(isnan(B))=0;
 
 % disp(B(:,16));
@@ -74,14 +74,14 @@ lgd = legend;
 
 set(gcf,'Units','Inches');
 
-title({'Memory SUM: iotmyth (HTTP 50K RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
-%title({'CPU SUM: iotmyth (HTTP 50K RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
-%title({'HTTP Response Times over Time (50K RPS)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'HTTP Latencies over Time (50K RPS)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'Bytes Throughput over Time (50K RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',15);
+%title({'Memory SUM: iotmyth (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+title({'CPU SUM: iotmyth (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'HTTP Response Times over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+%title({'HTTP Latencies over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+%title({'Bytes Throughput over Time (50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',15);
 
 xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',15);
-ylabel(ylabelslat,'FontSize',15);
+ylabel(ylabelscpu,'FontSize',15);
 ylim([0,max(B(:,size(B,2)))*1.2])
 % xlim([min(x),max(x)])
 pos = get(gcf,'Position');

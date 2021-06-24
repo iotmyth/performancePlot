@@ -1,6 +1,6 @@
 format longG
 
-data = readtable('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/4/LatenciesOverTime.csv', 'ReadVariableNames', false, 'HeaderLines', 1);
+data = readtable('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/4/TransactionsPerSecond.csv', 'ReadVariableNames', false, 'HeaderLines', 1);
 
 % ini untuk format date seperti halnya di jmeter ya
 % x = seconds((datenum(datestr(data.ElapsedTime, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000);
@@ -21,31 +21,34 @@ ylabels3='Probability';
 legend_base_name = 'data-';
 
 % kalo ini format number dalam menit elapsed time
-% x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000/60;
+x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000/60;
 
 % ini untuk data x yang pure number aja, bukan elapsed time
-x = fix(data{:,2});
+%x = data{:,1};
+y = data{:,3};
 
 hold on
-title('Any Plot');
-xlabel('Delay','FontSize',12,'FontWeight','bold');
-ylabel(ylabels3,'FontSize',12,'FontWeight','bold');
+% title('Any Plot');
+% xlabel('Delay','FontSize',12,'FontWeight','bold');
+% ylabel(ylabels3,'FontSize',12,'FontWeight','bold');
 
  %code
-  b=x/sum(x);
-%  b = b';
-%  b = b(:)';
+z=y/sum(y);
+% b = b';
+% b = b(:)';
     
 
-B = x';
-B = B(:)';
+% B = x';
+% B = B(:)';
 
-disp(sum(b))
+% C = [x,b];
 
-% stem(B,b)
+% disp(C(:,2))
+
+scatter(x,y)
 
 box on;
-ax = gca;
-ax.YAxis.Exponent = 0;
-legend('show');
+% ax = gca;
+% ax.YAxis.Exponent = 0;
+% legend('show');
 hold off

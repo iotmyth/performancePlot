@@ -71,7 +71,7 @@ lgd = legend;
 
 set(gcf,'Units','Inches');
 
-title({'SUM Threads State over Time (50K RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+title({'SUM Threads State over Time (50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
 %title({'HTTP Response Times over Time (50K RPS)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'HTTP Latencies over Time (50K RPS)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Bytes Throughput over Time (50K RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',15);
