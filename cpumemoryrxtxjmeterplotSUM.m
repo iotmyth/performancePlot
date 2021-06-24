@@ -1,8 +1,8 @@
 format longG
 
-stringCSV = 'CPUsum-data-2021-06-0423_44_07';
+stringCSV = 'Network TX-data-as-seriestocolumns-2021-06-04 23_55_01';
 dataID = '4SUM';
-data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/4/iotmyth/',strcat(stringCSV,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
+data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/4/ingress/',strcat(stringCSV,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
 
 % ini untuk format date seperti halnya di jmeter ya
 % x = seconds((datenum(datestr(data.ElapsedTime, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000);
@@ -39,7 +39,7 @@ x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(da
    A = table2array(temp_data);
    A(isnan(A))=0;
 % A = rand(1000, 4);  % Test data
-B = [A, sum(A, 2)]; %1000000
+B = [A, sum(A, 2)/1000000]; %1000000
 B(isnan(B))=0;
 
 % disp(B(:,16));
@@ -74,20 +74,24 @@ lgd = legend;
 
 set(gcf,'Units','Inches');
 
-%title({'Memory SUM: iotmyth (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
-title({'CPU SUM: iotmyth (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'Memory SUM: ingress (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'CPU SUM: iotmyth (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'Network RX SUM: ingress (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+title({'Network TX SUM: ingress (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+
 %title({'HTTP Response Times over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'HTTP Latencies over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Bytes Throughput over Time (50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',15);
 
-xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',15);
-ylabel(ylabelscpu,'FontSize',15);
+xlabel('Elapsed time (minutes)','FontSize',15);
+ylabel(ylabelstruput,'FontSize',15);
 ylim([0,max(B(:,size(B,2)))*1.2])
 % xlim([min(x),max(x)])
 pos = get(gcf,'Position');
 set(findall(gcf,'-property','FontName'),'FontName','Times New Roman');
 set(gcf,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);
 print(gcf,'-dpdf',strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/hasilgrafik/',strcat(dataID,stringCSV)),'-r0');
+savefig(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/hasilgrafik/',strcat(dataID,stringCSV)));
 % print -dpdf -painters hasilgrafik/1a
 hold off;
 

@@ -1,6 +1,6 @@
 format longG
 
-data = readtable('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/4/TransactionsPerSecond.csv', 'ReadVariableNames', false, 'HeaderLines', 1);
+data = readtable('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/4/ResponseTimesDistribution.csv', 'ReadVariableNames', false, 'HeaderLines', 1);
 
 % ini untuk format date seperti halnya di jmeter ya
 % x = seconds((datenum(datestr(data.ElapsedTime, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000);
@@ -21,11 +21,11 @@ ylabels3='Probability';
 legend_base_name = 'data-';
 
 % kalo ini format number dalam menit elapsed time
-x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000/60;
+%x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000/60;
 
 % ini untuk data x yang pure number aja, bukan elapsed time
-%x = data{:,1};
-y = data{:,3};
+x = data{:,1};
+y = data{:,2};
 
 hold on
 % title('Any Plot');
@@ -45,7 +45,8 @@ z=y/sum(y);
 
 % disp(C(:,2))
 
-scatter(x,y)
+set(gca, 'YScale', 'log')
+stem(x,y)
 
 box on;
 % ax = gca;

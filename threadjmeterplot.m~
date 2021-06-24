@@ -1,8 +1,8 @@
 format longG
 
-stringCSV = 'thread6';
+stringCSV = 'ResponseTimesPercentiles';
 dataID = '4SUM';
-data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/6/',strcat(stringCSV,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 1);
+data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/4/',strcat(stringCSV,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 1);
 
 % ini untuk format date seperti halnya di jmeter ya
 % x = seconds((datenum(datestr(data.ElapsedTime, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000);
@@ -38,7 +38,7 @@ x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(da
    A = table2array(temp_data);
 % A = rand(1000, 4);  % Test data
 B = [A, sum(A, 2)];
-B(isnan(B))=0;
+% B(isnan(B))=0;
 
 disp(B(:,size(B,2)));
 
@@ -49,7 +49,7 @@ if(size(data,2) == 2)
     ylabel(ylabels,'FontSize',14);
 end
 
-plot(x,B(:,size(B,2)),strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width,'DisplayName',strcat(legend_base_name,''));
+plot(x,B(:,size(B)),strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width,'DisplayName',strcat(legend_base_name,''));
 
 box on;
 grid on;
@@ -78,7 +78,7 @@ title({'SUM Threads State over Time (50K Threads)','Instance Type (m5.2xlarge/m5
 
 xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',15);
 ylabel(ylabelslat,'FontSize',15);
-%ylim([0,max(B(:,5))*1.2])
+ylim([0,max(B(:,5))*1.2])
 % xlim([min(x),max(x)])
 pos = get(gcf,'Position');
 set(findall(gcf,'-property','FontName'),'FontName','Times New Roman');

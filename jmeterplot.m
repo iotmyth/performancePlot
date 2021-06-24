@@ -1,6 +1,6 @@
 format longG
 
-stringCSV = 'LatenciesOverTime';
+stringCSV = 'ResponseTimesPercentiles';
 dataID = '4';
 data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/4/',strcat(stringCSV,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 1);
 
@@ -18,6 +18,7 @@ color_counter = 1;
 line_counter = 1;
 ylabels='Response times (ms)';
 ylabelslat = 'Response latencies (ms)';
+ypercent = 'Percentile value (ms)';
 ylabelsrescode = 'Number of responses per second ';
 ylabels1='Number of threads';
 ylabels2='Mega Bytes (MB)';
@@ -29,9 +30,9 @@ legend_base_name = 'HTTP Request-';
 
 
 % kalo ini format number dalam menit elapsed time
-x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000/60;
+%x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000/60;
 % ini untuk data x yang pure number aja, bukan elapsed time
-%x = data{:,1};
+x = data{:,1};
 
 hold on
 if(size(data,2) == 2)
@@ -41,7 +42,7 @@ if(size(data,2) == 2)
 end
 
 for i=1:size(data,2)-1
-    if(size(data,2) <= 2)
+    if(size(data,2) < 2)
         % ini untuk khusus yang 1 kolom saja
         scatter(x,data{:,i+1},strcat(colors{color_counter},markers{marker_counter}),'DisplayName',strcat(legend_base_name,sprintf('%.0f',i)));
     else
@@ -99,12 +100,14 @@ set(gcf,'Units','Inches');
 
 %title({'Threads State over Time (50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
 %title({'HTTP Response Times over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-title({'HTTP Latencies over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+%title({'HTTP Latencies over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+title({'Response Times Percentile (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Bytes Throughput over Time (50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',15);
 %title({'Response Codes per second (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 
-xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',15);
-ylabel(ylabelslat,'FontSize',15);
+%xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',15);
+xlabel('Percentiles (%)','FontSize',15);
+ylabel(ylabels,'FontSize',15);
 pos = get(gcf,'Position');
 set(findall(gcf,'-property','FontName'),'FontName','Times New Roman');
 set(gcf,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);

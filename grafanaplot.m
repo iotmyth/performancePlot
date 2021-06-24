@@ -1,8 +1,8 @@
 format longG
 
-stringCSV = 'CPU-data-as-seriestocolumns-2021-06-0423_45_20';
+stringCSV = 'CPU-data-as-seriestocolumns-2021-06-04 23_48_26';
 dataID = '4';
-namespace = 'iotmyth';
+namespace = 'redis';
 data = readtable(strcat(strcat(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/',dataID),'/'),strcat(strcat(strcat(namespace,'/'),stringCSV),'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
 
 % ini untuk format date seperti halnya di jmeter ya
@@ -15,6 +15,7 @@ colors = {'r','b','m','k','y','c','g','r','b','m','k','y'};
 lines = {'-','-.','--',':',':','--'};
 line_width = 0.9;
 marker_size = 2.8;
+%marker_size = 5;
 marker_counter = 1;
 color_counter = 1;
 line_counter = 1;
@@ -27,7 +28,7 @@ ylabelstruput='Mega Bytes (MB) per second';
 ylabels3='TCP connections';
 ythread='Number of active threads';
 %legend_base_name = 'Worker-';
-legend_base_name = 'iotmyth-pod-';
+legend_base_name = 'redis-pod-';
 % legend_base_name = 'iotmyth-cpu-';
 %legend_base_name = 'iotmyth-memory-';
 
@@ -75,21 +76,28 @@ ax.YAxis.Exponent = 0;
 ax.GridLineStyle = ':';
 ax.GridAlpha = 0.3;
 ax.LineWidth = 0.9;
-set(gca,'FontSize',16)
+set(gca,'FontSize',16);
+%legend('Active Flow','New Flow')
 legend('show');
 lgd = legend;
-lgd.FontSize=10;
+%lgd.FontSize=10;
 %lgd.Location = 'northWest';
 
 set(gcf,'Units','Inches');
 
-%title({'Pod Count: iotmyth (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
-%title({'CPU SUM: iotmyth (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
-title({'CPU: iotmyth (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
-%title({'Memory: iotmyth (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'Pod Count: ingress (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'CPU SUM: ingress (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+title({'CPU: redis cluster (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'Memory: redis (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'Network RX: ingress (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'Network TX: ingress (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'Network Load Balancer (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+
+
 %title({'HTTP Response Times over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'HTTP Latencies over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Bytes Throughput over Time (50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',15);
+
 
 xlabel('Elapsed time (minutes)','FontSize',15);
 ylabel(ylabelscpusum,'FontSize',15);
