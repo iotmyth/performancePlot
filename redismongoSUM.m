@@ -1,11 +1,11 @@
 format longG
-
-stringREDIS = 'Total Memory Usage-data-as-seriestocolumns-2021-06-14 05_31_33';
+clear all;close all;
+stringREDIS = 'Memory-data-as-seriestocolumns-2021-06-04 23_48_43';
 stringMONGO = 'Memory-data-as-seriestocolumns-2021-06-04 23_50_41';
 bytesDevider = 1000000;
 % bytesDevider = 1;
 dataID = '4SUMREDISMONGO';
-data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/4/redis/cluster/',strcat(stringREDIS,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
+data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/4/redis/',strcat(stringREDIS,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
 data2 = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/4/mongo/',strcat(stringMONGO,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
 
 % ini untuk format date seperti halnya di jmeter ya
@@ -62,20 +62,16 @@ B2(isnan(B2))=0;
 % b_ex = [B,B2];
 
 hold on
-if(size(data,2) == 2)
-    markers = {'.'};
-    colors = {'r'};
-    ylabel(ylabels,'FontSize',14);
-end
-
-if(size(data2,2) == 2)
-    markers = {'.'};
-    colors = {'r'};
-    ylabel(ylabels,'FontSize',14);
-end
-
-% for i=1:size(data,2)-1
-%     plot(x,B(:,size(B,2)),strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width,'DisplayName',strcat(legend_base_name,''));
+% if(size(data,2) == 2)
+%     markers = {'.'};
+%     colors = {'r'};
+%     ylabel(ylabels,'FontSize',14);
+% end
+% 
+% if(size(data2,2) == 2)
+%     markers = {'.'};
+%     colors = {'r'};
+%     ylabel(ylabels,'FontSize',14);
 % end
 
 if(size(x) > size(x2))
@@ -83,7 +79,6 @@ if(size(x) > size(x2))
 else
     ylimit = max(B2(:,size(B2,2)))*1.2;
 end
-
 
 yyaxis left
 plot(x,B(:,size(B,2)),strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width)
@@ -95,7 +90,7 @@ ylabel(ylabelslat,'FontSize',15);
 yyaxis right
 plot(x2,B2(:,size(B2,2)),strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width,'color',[0 0.7 0])
 ylim([0 ylimit])
-
+set(gca,'Yticklabel',[]) 
 
 box on;
 grid on;
@@ -115,7 +110,7 @@ box(ax,'on');
 % ax.YAxis(2).Visible='off'; % Removes right axis
 
 
-    legend('Bytes received per second','Bytes sent per second');
+    legend('Redis Cluster','MongoDB Sharded');
 
 legend('show');
 lgd = legend;
@@ -124,9 +119,9 @@ lgd.Location = 'northWest';
 
 set(gcf,'Units','Inches');
 
-title({'Node Memory SUM: redis cluster (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+title({'Memory Utilization HTTP 50K Threads','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
 %title({'Node Command SUM: redis cluster (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
-%title({'CPU SUM: iotmyth (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'CPU Utilization HTTP 50K Threads','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
 %title({'Network RX SUM: ingress (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
 %title({'Network TX SUM: ingress (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
 
