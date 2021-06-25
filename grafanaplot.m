@@ -1,8 +1,10 @@
 format longG
 
-stringCSV = 'CPU-data-as-seriestocolumns-2021-06-04 23_48_26';
+stringCSV = 'Memory-data-as-seriestocolumns-2021-06-04 23_50_41';
+bytesDevider = 1000000;
+bytesDevider = 1;
 dataID = '4';
-namespace = 'redis';
+namespace = 'mongo';
 data = readtable(strcat(strcat(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/',dataID),'/'),strcat(strcat(strcat(namespace,'/'),stringCSV),'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
 
 % ini untuk format date seperti halnya di jmeter ya
@@ -26,9 +28,10 @@ ylabels1='Number of threads';
 ylabels2='Mega Bytes (MB)';
 ylabelstruput='Mega Bytes (MB) per second';
 ylabels3='TCP connections';
+yredis='Command executed per second';
 ythread='Number of active threads';
 %legend_base_name = 'Worker-';
-legend_base_name = 'redis-pod-';
+legend_base_name = 'redis-node-';
 % legend_base_name = 'iotmyth-cpu-';
 %legend_base_name = 'iotmyth-memory-';
 
@@ -46,7 +49,7 @@ if(size(data,2) == 2)
 end
 
 for i=1:size(data,2)-1
-            plot(x,data{:,i+1},strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width,'DisplayName',strcat(legend_base_name,sprintf('%.0f',i)));
+            plot(x,data{:,i+1}/bytesDevider,strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width,'DisplayName',strcat(legend_base_name,sprintf('%.0f',i)));
 
       if mod(i,  size(markers,2)) == 0
          marker_counter = 1;
@@ -80,15 +83,16 @@ set(gca,'FontSize',16);
 %legend('Active Flow','New Flow')
 legend('show');
 lgd = legend;
-%lgd.FontSize=10;
+lgd.FontSize=10;
 %lgd.Location = 'northWest';
 
 set(gcf,'Units','Inches');
 
 %title({'Pod Count: ingress (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
 %title({'CPU SUM: ingress (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
-title({'CPU: redis cluster (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
-%title({'Memory: redis (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'CPU: redis (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'Node Memory: redis cluster (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+title({'Node Command: redis cluster (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
 %title({'Network RX: ingress (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
 %title({'Network TX: ingress (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
 %title({'Network Load Balancer (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
@@ -100,7 +104,7 @@ title({'CPU: redis cluster (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2x
 
 
 xlabel('Elapsed time (minutes)','FontSize',15);
-ylabel(ylabelscpusum,'FontSize',15);
+ylabel(yredis,'FontSize',15);
 pos = get(gcf,'Position');
 ymax = max(data{:,2});
 %ylim([0,ymax(1)*1.2])
@@ -108,6 +112,7 @@ ymax = max(data{:,2});
 set(findall(gcf,'-property','FontName'),'FontName','Times New Roman');
 set(gcf,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);
 print(gcf,'-dpdf',strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/hasilgrafik/',strcat(dataID,stringCSV)),'-r0');
+savefig(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/hasilgrafik/',strcat(dataID,stringCSV)));
 % print -dpdf -painters hasilgrafik/1a
 hold off;
 

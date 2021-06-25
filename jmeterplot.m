@@ -1,7 +1,9 @@
 format longG
 
-stringCSV = 'ResponseTimesPercentiles';
+stringCSV = 'TransactionsPerSecond';
 dataID = '4';
+bytesDevider=1000000;
+bytesDevider=1;
 data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/4/',strcat(stringCSV,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 1);
 
 % ini untuk format date seperti halnya di jmeter ya
@@ -19,6 +21,7 @@ line_counter = 1;
 ylabels='Response times (ms)';
 ylabelslat = 'Response latencies (ms)';
 ypercent = 'Percentile value (ms)';
+ytrans= 'Number of transactions per second';
 ylabelsrescode = 'Number of responses per second ';
 ylabels1='Number of threads';
 ylabels2='Mega Bytes (MB)';
@@ -30,9 +33,9 @@ legend_base_name = 'HTTP Request-';
 
 
 % kalo ini format number dalam menit elapsed time
-%x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000/60;
+x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000/60;
 % ini untuk data x yang pure number aja, bukan elapsed time
-x = data{:,1};
+%x = data{:,1};
 
 hold on
 if(size(data,2) == 2)
@@ -42,16 +45,16 @@ if(size(data,2) == 2)
 end
 
 for i=1:size(data,2)-1
-    if(size(data,2) < 2)
+    if(size(data,2) <= 2)
         % ini untuk khusus yang 1 kolom saja
         scatter(x,data{:,i+1},strcat(colors{color_counter},markers{marker_counter}),'DisplayName',strcat(legend_base_name,sprintf('%.0f',i)));
     else
-        if(strcmp(stringCSV, 'BytesThroughputOverTime') || strcmp(stringCSV,'ResponseCodesPerSecond'))
+        if(strcmp(stringCSV, 'BytesThroughputOverTime') || strcmp(stringCSV,'ResponseCodesPerSecond') || strcmp(stringCSV,'TransactionsPerSecond'))
             marker_size = 12;
             markers = {'.'};
-            colors = {'r','b','g','m'};
+            colors = {'b','r','g','m'};
             ylabel(ylabels,'FontSize',14);
-          plot(x,data{:,i+1}/1000000,strcat(colors{color_counter},markers{marker_counter}),'MarkerSize',marker_size);
+          plot(x,data{:,i+1}/bytesDevider,strcat(colors{color_counter},markers{marker_counter}),'MarkerSize',marker_size);
         else
             plot(x,data{:,i+1},strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width,'DisplayName',strcat(legend_base_name,sprintf('%.0f',i)));
         end
@@ -87,8 +90,9 @@ ax.GridAlpha = 0.3;
 ax.LineWidth = 0.9;
 set(gca,'FontSize',16)
 
-if(strcmp(stringCSV, 'BytesThroughputOverTime') || strcmp(stringCSV,'ResponseCodesPerSecond'))
-     legend('Bytes received per second','Bytes sent per second');
+if(strcmp(stringCSV, 'BytesThroughputOverTime') || strcmp(stringCSV,'ResponseCodesPerSecond') || strcmp(stringCSV,'TransactionsPerSecond'))
+%    legend('Bytes received per second','Bytes sent per second');
+    legend('HTTP failure','HTTP success');
 %    legend('200 OK','502 Bad Gateway','504 Gateway Timeout','Non HTTP Timeout');
 end
 legend('show');
@@ -101,17 +105,19 @@ set(gcf,'Units','Inches');
 %title({'Threads State over Time (50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
 %title({'HTTP Response Times over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'HTTP Latencies over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-title({'Response Times Percentile (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+%title({'Response Times Percentile (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+title({'Transactions per second (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Bytes Throughput over Time (50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',15);
 %title({'Response Codes per second (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 
-%xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',15);
-xlabel('Percentiles (%)','FontSize',15);
-ylabel(ylabels,'FontSize',15);
+xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',15);
+%xlabel('Percentiles (%)','FontSize',15);
+ylabel(ytrans,'FontSize',15);
 pos = get(gcf,'Position');
 set(findall(gcf,'-property','FontName'),'FontName','Times New Roman');
 set(gcf,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);
 print(gcf,'-dpdf',strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/hasilgrafik/',strcat(dataID,stringCSV)),'-r0');
+savefig(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/hasilgrafik/',strcat(dataID,stringCSV)));
 % print -dpdf -painters hasilgrafik/1a
 hold off;
 
