@@ -102,12 +102,12 @@ lgd = legend;
 
 set(gcf,'Units','Inches');
 
-%title({'Threads State over Time (50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'Threads State over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'HTTP Response Times over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'HTTP Latencies over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Response Times Percentile (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 title({'Transactions per second (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'Bytes Throughput over Time (50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',15);
+%title({'Bytes Throughput over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',15);
 %title({'Response Codes per second (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 
 xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',15);

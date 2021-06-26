@@ -79,15 +79,15 @@ lgd = legend;
 
 set(gcf,'Units','Inches');
 
-title({'Node Memory SUM: redis cluster (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
-%title({'Node Command SUM: redis cluster (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
-%title({'CPU SUM: iotmyth (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
-%title({'Network RX SUM: ingress (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
-%title({'Network TX SUM: ingress (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+title({'Node Memory SUM: redis cluster (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+%title({'Node Command SUM: redis cluster (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+%title({'CPU SUM: iotmyth (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+%title({'Network RX SUM: ingress (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+%title({'Network TX SUM: ingress (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 
 %title({'HTTP Response Times over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'HTTP Latencies over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'Bytes Throughput over Time (50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',15);
+%title({'Bytes Throughput over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',15);
 
 xlabel('Elapsed time (minutes)','FontSize',15);
 ylabel(ylabelslat,'FontSize',15);

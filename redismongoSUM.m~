@@ -1,9 +1,9 @@
 format longG
 clear all;close all;
-stringREDIS = 'Memory-data-as-seriestocolumns-2021-06-04 23_48_43';
-stringMONGO = 'Memory-data-as-seriestocolumns-2021-06-04 23_50_41';
+stringREDIS = 'CPU-data-as-seriestocolumns-2021-06-04 23_48_26';
+stringMONGO = 'CPU-data-as-seriestocolumns-2021-06-04 23_50_23';
 bytesDevider = 1000000;
-% bytesDevider = 1;
+bytesDevider = 1;
 dataID = '4SUMREDISMONGO';
 data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/4/redis/',strcat(stringREDIS,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
 data2 = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/4/mongo/',strcat(stringMONGO,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
@@ -75,7 +75,7 @@ ylim([0 ylimit])
 marker_counter = marker_counter + 1;
 color_counter =color_counter+ 1;
 xlabel('Elapsed time (minutes)','FontSize',15);
-ylabel(ylabelslat,'FontSize',15);
+ylabel(yredis,'FontSize',15);
 yyaxis right
 plot(x2,B2(:,size(B2,2)),strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width,'color',[0 0.7 0])
 ylim([0 ylimit])
@@ -92,7 +92,7 @@ ax.YAxis(2).Exponent = 0;
 % ax.YAxis(1).Color = 'r';
 % ax.YAxis(2).Color = [0 0.7 0];
 ax.YAxis(1).Color = 'k';
-ax.YAxis(2).Color = 'k';
+ax.YAxis(2).Color = [0 0.7 0];
 ax.GridLineStyle = ':';
 ax.GridAlpha = 0.3;
 ax.LineWidth = 0.9;
@@ -110,10 +110,10 @@ lgd.Location = 'northWest';
 
 set(gcf,'Units','Inches');
 
-title({'Memory Utilization HTTP 50K Threads','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+%title({'Memory Utilization HTTP 50K Threads','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Database Operations HTTP 50K Threads','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Node Command SUM: redis cluster (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'CPU Utilization HTTP 50K Threads','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+ title({'CPU Utilization HTTP 50K Threads','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Network RX SUM: ingress (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Network TX SUM: ingress (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 

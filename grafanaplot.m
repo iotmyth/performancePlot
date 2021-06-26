@@ -88,19 +88,19 @@ lgd.FontSize=10;
 
 set(gcf,'Units','Inches');
 
-%title({'Pod Count: ingress (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
-%title({'CPU SUM: ingress (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
-%title({'CPU: redis (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
-%title({'Node Memory: redis cluster (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
-title({'Node Command: redis cluster (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
-%title({'Network RX: ingress (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
-%title({'Network TX: ingress (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
-%title({'Network Load Balancer (HTTP 50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'Pod Count: ingress (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+%title({'CPU SUM: ingress (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+%title({'CPU: redis (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+%title({'Node Memory: redis cluster (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+title({'Node Command: redis cluster (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+%title({'Network RX: ingress (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+%title({'Network TX: ingress (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+%title({'Network Load Balancer (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 
 
 %title({'HTTP Response Times over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'HTTP Latencies over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'Bytes Throughput over Time (50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',15);
+%title({'Bytes Throughput over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',15);
 
 
 xlabel('Elapsed time (minutes)','FontSize',15);
