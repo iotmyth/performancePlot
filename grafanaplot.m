@@ -1,10 +1,10 @@
 format longG
 
-stringCSV = 'Memory-data-as-seriestocolumns-2021-06-04 23_50_41';
+stringCSV = 'Scaling Nodes Count-data-as-seriestocolumns-2021-06-05 02_08_10';
 bytesDevider = 1000000;
 bytesDevider = 1;
 dataID = '4';
-namespace = 'mongo';
+namespace = 'nodes';
 data = readtable(strcat(strcat(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/',dataID),'/'),strcat(strcat(strcat(namespace,'/'),stringCSV),'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
 
 % ini untuk format date seperti halnya di jmeter ya
@@ -13,7 +13,7 @@ data = readtable(strcat(strcat(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPS
 
 markers = {'+','*','.','o','x','v','d','^','s','>','<','v','p','h','p','v','<','>','s','^','d','v','x','o','.','*'};
 % markers = {'.','^'};
-colors = {'r','b','m','k','y','c','g','r','b','m','k','y'};
+colors = {'r','b','m','k','g','c','y','r','b','m','k','g'};
 lines = {'-','-.','--',':',':','--'};
 line_width = 0.9;
 marker_size = 2.8;
@@ -25,6 +25,7 @@ ylabelspod='Number of pods';
 ylabelscpusum='Number of core CPU';
 ylabelslat = 'Response latencies (ms)';
 ylabels1='Number of threads';
+ynodes='Number of nodes';
 ylabels2='Mega Bytes (MB)';
 ylabelstruput='Mega Bytes (MB) per second';
 ylabels3='TCP connections';
@@ -80,11 +81,13 @@ ax.GridLineStyle = ':';
 ax.GridAlpha = 0.3;
 ax.LineWidth = 0.9;
 set(gca,'FontSize',16);
-%legend('Active Flow','New Flow')
+legend('long unregistered','not started','ready','unready','unregistered');
 legend('show');
 lgd = legend;
 lgd.FontSize=10;
-%lgd.Location = 'northWest';
+% lgd.Location = 'northWest';
+% lgd.Location = 'north';
+
 
 set(gcf,'Units','Inches');
 
@@ -92,7 +95,8 @@ set(gcf,'Units','Inches');
 %title({'CPU SUM: ingress (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'CPU: redis (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Node Memory: redis cluster (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-title({'Node Command: redis cluster (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Node Command: redis cluster (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+title({'Node scaling (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Network RX: ingress (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Network TX: ingress (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Network Load Balancer (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
@@ -104,10 +108,11 @@ title({'Node Command: redis cluster (HTTP 50K Threads)','Instance Type (m5.xlarg
 
 
 xlabel('Elapsed time (minutes)','FontSize',15);
-ylabel(yredis,'FontSize',15);
+ylabel(ynodes,'FontSize',15);
 pos = get(gcf,'Position');
-ymax = max(data{:,2});
-%ylim([0,ymax(1)*1.2])
+% ymax = max(data{:,2});
+% ylim([0,ymax(1)*1.2])
+ylim([0,15])
 %xlim([min(x),max(x)])
 set(findall(gcf,'-property','FontName'),'FontName','Times New Roman');
 set(gcf,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);

@@ -1,8 +1,8 @@
 format longG
-
-stringCSV = 'thread6';
-dataID = '4SUM';
-data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/6/',strcat(stringCSV,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 1);
+clear all;close all;
+stringCSV = 'thread';
+dataID = '5';
+data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/',dataID,'/',strcat(stringCSV,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 1);
 
 % ini untuk format date seperti halnya di jmeter ya
 % x = seconds((datenum(datestr(data.ElapsedTime, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000);
@@ -78,12 +78,13 @@ title({'SUM Threads State over Time (50K Threads)','Instance Type (m5.xlarge/m5a
 
 xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',15);
 ylabel(ylabelslat,'FontSize',15);
-%ylim([0,max(B(:,5))*1.2])
+ylim([0,max(B(:,5))*1.2])
 % xlim([min(x),max(x)])
 pos = get(gcf,'Position');
 set(findall(gcf,'-property','FontName'),'FontName','Times New Roman');
 set(gcf,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);
-print(gcf,'-dpdf',strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/hasilgrafik/',strcat(dataID,stringCSV)),'-r0');
+print(gcf,'-dpdf',strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/hasilgrafik/',strcat(dataID,'SUM',stringCSV)),'-r0');
+savefig(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/hasilgrafik/',strcat(dataID,'SUM',stringCSV)));
 % print -dpdf -painters hasilgrafik/1a
 hold off;
 
