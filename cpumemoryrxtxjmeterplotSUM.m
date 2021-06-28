@@ -1,10 +1,11 @@
 format longG
 
-stringCSV = 'Total Memory Usage-data-as-seriestocolumns-2021-06-14 05_31_33';
+stringCSV = 'Network TX-data-as-seriestocolumns-2021-06-05 00_14_19';
 bytesDevider = 1000000;
 % bytesDevider = 1;
-dataID = '4SUM';
-data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/4/redis/cluster/',strcat(stringCSV,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
+dataID = '5';
+namespace = 'ingress';
+data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/',dataID,'/',namespace,'/',strcat(stringCSV,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
 
 
 
@@ -24,13 +25,13 @@ ylabels='Response times (ms)';
 ylabelslat = 'Mega Bytes (MB)';
 ylabelscpu='Number of core CPU';
 ylabels1='Number of threads';
-ylabels2='Mega Bytes (MB)';
+ylabelsmem='Mega Bytes (MB)';
 yredis = 'Command executed per second';
 ylabelstruput='Mega Bytes (MB) per second';
 ylabels3='TCP connections';
 ythread='Number of active threads';
 %legend_base_name = 'Worker-';
-legend_base_name = 'All nodes';
+legend_base_name = 'All pods';
 
 
 % kalo ini format number dalam menit elapsed time
@@ -79,25 +80,30 @@ lgd = legend;
 
 set(gcf,'Units','Inches');
 
-title({'Node Memory SUM: redis cluster (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Node Memory SUM: redis cluster (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Node Command SUM: redis cluster (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'CPU SUM: iotmyth (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'Network RX SUM: ingress (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'Network TX SUM: ingress (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'CPU SUM: emqx (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Memory SUM: emqx (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Network RX SUM: emqx (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Network TX SUM: emqx (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 
-%title({'HTTP Response Times over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'HTTP Latencies over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'Bytes Throughput over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',15);
+% title({'Node Memory SUM: redis cluster (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+%title({'Node Command SUM: redis cluster (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'CPU SUM: ingress (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Memory SUM: ingress (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Network RX SUM: ingress (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+title({'Network TX SUM: ingress (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+
 
 xlabel('Elapsed time (minutes)','FontSize',15);
-ylabel(ylabelslat,'FontSize',15);
+ylabel(ylabelstruput,'FontSize',15);
 ylim([0,max(B(:,size(B,2)))*1.2])
 % xlim([min(x),max(x)])
 pos = get(gcf,'Position');
 set(findall(gcf,'-property','FontName'),'FontName','Times New Roman');
 set(gcf,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);
-print(gcf,'-dpdf',strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/hasilgrafik/',strcat(dataID,stringCSV)),'-r0');
-savefig(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/hasilgrafik/',strcat(dataID,stringCSV)));
+print(gcf,'-dpdf',strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/hasilgrafik/',strcat(dataID,'SUM',stringCSV)),'-r0');
+savefig(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/hasilgrafik/',strcat(dataID,'SUM',stringCSV)));
 % print -dpdf -painters hasilgrafik/1a
 hold off;
 

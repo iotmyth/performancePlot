@@ -1,6 +1,6 @@
 format longG
 clear all;close all;
-stringCSV = 'ResponseTimesPercentiles';
+stringCSV = 'LatenciesOverTime';
 dataID = '5';
 bytesDevider=1000000;
 bytesDevider=1;
@@ -26,14 +26,15 @@ ylabels2='Mega Bytes (MB)';
 ylabelstruput='Mega Bytes (MB) per second';
 ylabels3='TCP connections';
 ythread='Number of active threads';
-legend_base_name = 'Worker-';
-% legend_base_name = 'HTTP Request-';
+% legend_base_name = 'Worker-';
+legend_base_name = 'HTTP Request-';
 
+set(gca, 'YScale', 'log')
 
 % kalo ini format number dalam menit elapsed time
-% x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000/60;
+x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000/60;
 % ini untuk data x yang pure number aja, bukan elapsed time
-x = data{:,1};
+% x = data{:,1};
 
 hold on
 if(size(data,2) == 2)
@@ -50,13 +51,21 @@ for i=1:size(data,2)-1
         if(strcmp(stringCSV, 'BytesThroughputOverTime') || strcmp(stringCSV,'ResponseCodesPerSecond') || strcmp(stringCSV,'TransactionsPerSecond'))
             marker_size = 12;
             markers = {'.'};
-            colors = {'b','r','g','m'};
+            colors = {'r','b','g','m'};
             ylabel(ylabels,'FontSize',14);
           plot(x,data{:,i+1}/bytesDevider,strcat(colors{color_counter},markers{marker_counter}),'MarkerSize',marker_size);
         else
-             markers = {''};
-             lines = {'--','-.','-'};
-            plot(x,data{:,i+1},strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width,'DisplayName',strcat(legend_base_name,sprintf('%.0f',i)));
+            
+       
+%              markers = {''};
+%              lines = {'--','-.','-'};
+%             plot(x,data{:,i+1},strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width,'DisplayName',strcat(legend_base_name,sprintf('%.0f',i)));
+
+% UNTUK MQTT YANG DATA RANGE JAUH
+marker_size = 8;
+    markers = {'.'};
+    colors = {'r',[0 0.7 0],'b'};
+        plot(x,data{:,i+1},markers{marker_counter},'MarkerSize',marker_size,'Color',colors{color_counter});
         end
     end  
 
@@ -80,6 +89,7 @@ for i=1:size(data,2)-1
 end
 
 
+
 box on;
 grid on;
 
@@ -88,35 +98,44 @@ ax.YAxis.Exponent = 0;
 ax.GridLineStyle = ':';
 ax.GridAlpha = 0.3;
 ax.LineWidth = 0.9;
-set(gca,'FontSize',16)
+set(gca,'FontSize',16);
+
 
 if(strcmp(stringCSV, 'BytesThroughputOverTime') || strcmp(stringCSV,'ResponseCodesPerSecond') || strcmp(stringCSV,'TransactionsPerSecond'))
-%    legend('Bytes received per second','Bytes sent per second');
-    legend('HTTP failure','HTTP success');
+   legend('Bytes received per second','Bytes sent per second');
+%     legend('HTTP failure','HTTP success');
 %    legend('200 OK','502 Bad Gateway','504 Gateway Timeout','Non HTTP Timeout');
 end
- legend('MQTT Connect','MQTT Disconnect','MQTT Publish');
+legend('MQTT Connect','MQTT Disconnect','MQTT Publish');
 legend('show');
 lgd = legend;
 %lgd.FontSize=10;
-lgd.Location = 'northWest';
-
+% lgd.Location = 'northWest';
+% lgd.Location = 'south';
 set(gcf,'Units','Inches');
 
 % title({'Threads State over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'HTTP Response Times over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'','HTTP Response Times over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'HTTP Latencies over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-title({'Response Times Percentile (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+
+% title({'Threads State over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'MQTT Response Times over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+title({'MQTT Latencies over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+
+% title({'Response Times Percentile (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 % title({'Transactions per second (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'Bytes Throughput over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',15);
+% title({'Bytes Throughput over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',15);
 %title({'Response Codes per second (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 
-% xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',15);
-xlabel('Percentiles (%)','FontSize',15);
-ylabel(ylabels,'FontSize',15);
+xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',15);
+% xlabel('Percentiles (%)','FontSize',15);
+ylabel({ylabelslat},'FontSize',15);
 pos = get(gcf,'Position');
 set(findall(gcf,'-property','FontName'),'FontName','Times New Roman');
 set(gcf,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);
+
+% breakyaxis([20000 179000]);
+
 print(gcf,'-dpdf',strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/hasilgrafik/',strcat(dataID,stringCSV)),'-r0');
 savefig(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/hasilgrafik/',strcat(dataID,stringCSV)));
 % print -dpdf -painters hasilgrafik/1a

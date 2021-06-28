@@ -1,10 +1,10 @@
 format longG
-
-stringCSV = 'Scaling Nodes Count-data-as-seriestocolumns-2021-06-05 02_08_10';
+clear all;close all;
+stringCSV = 'Network TX-data-as-seriestocolumns-2021-06-05 00_14_19';
 bytesDevider = 1000000;
-bytesDevider = 1;
-dataID = '4';
-namespace = 'nodes';
+% bytesDevider = 1;
+dataID = '5';
+namespace = 'ingress';
 data = readtable(strcat(strcat(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/',dataID),'/'),strcat(strcat(strcat(namespace,'/'),stringCSV),'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
 
 % ini untuk format date seperti halnya di jmeter ya
@@ -26,13 +26,14 @@ ylabelscpusum='Number of core CPU';
 ylabelslat = 'Response latencies (ms)';
 ylabels1='Number of threads';
 ynodes='Number of nodes';
-ylabels2='Mega Bytes (MB)';
+ylabelsmem='Mega Bytes (MB)';
 ylabelstruput='Mega Bytes (MB) per second';
 ylabels3='TCP connections';
 yredis='Command executed per second';
 ythread='Number of active threads';
+legend_base_name = 'ingress-pod-';
 %legend_base_name = 'Worker-';
-legend_base_name = 'redis-node-';
+% legend_base_name = 'redis-node-';
 % legend_base_name = 'iotmyth-cpu-';
 %legend_base_name = 'iotmyth-memory-';
 
@@ -81,7 +82,7 @@ ax.GridLineStyle = ':';
 ax.GridAlpha = 0.3;
 ax.LineWidth = 0.9;
 set(gca,'FontSize',16);
-legend('long unregistered','not started','ready','unready','unregistered');
+% legend('long unregistered','not started','ready','unready','unregistered');
 legend('show');
 lgd = legend;
 lgd.FontSize=10;
@@ -91,28 +92,35 @@ lgd.FontSize=10;
 
 set(gcf,'Units','Inches');
 
-%title({'Pod Count: ingress (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Pod Count: i (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'CPU SUM: ingress (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'CPU: redis (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Node Memory: redis cluster (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 % title({'Node Command: redis cluster (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-title({'Node scaling (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Node scaling (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Network RX: ingress (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Network TX: ingress (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Network Load Balancer (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 
+% title({'Pod Count: ingress (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'CPU SUM: ingress (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'CPU: ingress (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Memory: ingress (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Node Memory: redis cluster (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Node Command: redis cluster (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Node scaling (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Network RX: ingress (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+title({'Network TX: ingress (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+%title({'Network Load Balancer (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 
-%title({'HTTP Response Times over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'HTTP Latencies over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'Bytes Throughput over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',15);
 
 
 xlabel('Elapsed time (minutes)','FontSize',15);
-ylabel(ynodes,'FontSize',15);
+ylabel(ylabelstruput,'FontSize',15);
 pos = get(gcf,'Position');
-% ymax = max(data{:,2});
+ymax = max(data{:,2});
 % ylim([0,ymax(1)*1.2])
-ylim([0,15])
+% ylim([0,15])
 %xlim([min(x),max(x)])
 set(findall(gcf,'-property','FontName'),'FontName','Times New Roman');
 set(gcf,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);

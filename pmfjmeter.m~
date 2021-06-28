@@ -31,7 +31,7 @@ set(gca, 'XScale', 'log')
 % stem(x,y,'DisplayName','HTTP Request');
 p(1) = stem(x,y,'r','DisplayName','MQTT Connect');
 p(2) = stem(x,y1,'Color',[0 0.7 0],'DisplayName','MQTT Disconnect');
-p(3) = stem(x,y2,'b','DisplayName','MQTT Publish');
+p(3) = stem(x,y2,'b','DisplayName','MQTT Publis');
 
 % legend(gca,'HTTP request')
  
