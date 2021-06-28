@@ -1,7 +1,7 @@
 format longG
 clear all;close all;
-stringCSV = 'thread';
-dataID = '5';
+stringCSV = 'thread6';
+dataID = '6';
 data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/',dataID,'/',strcat(stringCSV,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 1);
 
 % ini untuk format date seperti halnya di jmeter ya
@@ -56,6 +56,7 @@ grid on;
 
 ax = gca;
 ax.YAxis.Exponent = 0;
+ax.YAxis.TickLabelFormat = '%.0f';
 ax.GridLineStyle = ':';
 ax.GridAlpha = 0.3;
 ax.LineWidth = 0.9;
@@ -71,14 +72,15 @@ lgd = legend;
 
 set(gcf,'Units','Inches');
 
-title({'SUM Threads State over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'SUM Threads State over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+title({'SUM Threads State over Time (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'HTTP Response Times over Time (50K RPS)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'HTTP Latencies over Time (50K RPS)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Bytes Throughput over Time (50K RPS)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',15);
 
 xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',15);
 ylabel(ylabelslat,'FontSize',15);
-ylim([0,max(B(:,5))*1.2])
+% ylim([0,max(B(:,5))*1.2])
 % xlim([min(x),max(x)])
 pos = get(gcf,'Position');
 set(findall(gcf,'-property','FontName'),'FontName','Times New Roman');

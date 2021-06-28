@@ -1,8 +1,8 @@
 format longG
 
 clear all;close all;
-stringCSV = 'ResponseTimesDistribution';
-dataID = '5';
+stringCSV = 'rtd';
+dataID = '6';
 data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/',dataID,'/',strcat(stringCSV,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 1);
 
 markers = {'+','*','.','o','x','v','d','^','s','>','<','v','p','h','p','v','<','>','s','^','d','v','x','o','.','*'};
@@ -21,17 +21,17 @@ legend_base_name = 'data-';
 
 x = data{:,1};
 y = data{:,2};
-y1 = data{:,3};
-y2 = data{:,4};
+% y1 = data{:,3};
+% y2 = data{:,4};
 
 hold on
 
 set(gca, 'YScale', 'log')
-set(gca, 'XScale', 'log')
-% stem(x,y,'DisplayName','HTTP Request');
-p(1) = stem(x,y,'r','DisplayName','MQTT Connect');
-p(2) = stem(x,y1,'Color',[0 0.7 0],'DisplayName','MQTT Disconnect');
-p(3) = stem(x,y2,'b','DisplayName','MQTT Publish');
+% set(gca, 'XScale', 'log')
+stem(x,y,'DisplayName','HTTP Request');
+% p(1) = stem(x,y,'r','DisplayName','MQTT Connect');
+% p(2) = stem(x,y1,'Color',[0 0.7 0],'DisplayName','MQTT Disconnect');
+% p(3) = stem(x,y2,'b','DisplayName','MQTT Publish');
 
 % legend(gca,'HTTP request')
  

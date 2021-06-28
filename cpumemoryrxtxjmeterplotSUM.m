@@ -1,10 +1,10 @@
 format longG
 
-stringCSV = 'Network TX-data-as-seriestocolumns-2021-06-05 00_14_19';
+stringCSV = 'CPU-data-as-seriestocolumns-2021-06-05 00_07_36';
 bytesDevider = 1000000;
-% bytesDevider = 1;
+bytesDevider = 1;
 dataID = '5';
-namespace = 'ingress';
+namespace = 'redis';
 data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/',dataID,'/',namespace,'/',strcat(stringCSV,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
 
 
@@ -92,12 +92,12 @@ set(gcf,'Units','Inches');
 % title({'CPU SUM: ingress (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 % title({'Memory SUM: ingress (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 % title({'Network RX SUM: ingress (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-title({'Network TX SUM: ingress (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Network TX SUM: ingress (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 
 
 xlabel('Elapsed time (minutes)','FontSize',15);
-ylabel(ylabelstruput,'FontSize',15);
-ylim([0,max(B(:,size(B,2)))*1.2])
+ylabel(ylabelscpu,'FontSize',15);
+% ylim([0,max(B(:,size(B,2)))*1.2])
 % xlim([min(x),max(x)])
 pos = get(gcf,'Position');
 set(findall(gcf,'-property','FontName'),'FontName','Times New Roman');

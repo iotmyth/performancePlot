@@ -1,12 +1,12 @@
 format longG
 clear all;close all;
-stringREDIS = 'CPU-data-as-seriestocolumns-2021-06-05 00_07_36';
-stringMONGO = 'CPU-data-as-seriestocolumns-2021-06-05 00_09_20';
+stringREDIS = 'Commands Executed _ sec-data-as-seriestocolumns-2021-06-14 05_44_26';
+stringMONGO = 'Document Operations-data-as-seriestocolumns-2021-06-14 06_34_51';
 bytesDevider = 1000000;
 bytesDevider = 1;
 dataID = '5';
-data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/',dataID,'/redis/',strcat(stringREDIS,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
-data2 = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/',dataID,'/mongo/',strcat(stringMONGO,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
+data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/',dataID,'/redis/cluster/',strcat(stringREDIS,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
+data2 = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/',dataID,'/mongo/sharded/',strcat(stringMONGO,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
 
 % ini untuk format date seperti halnya di jmeter ya
 % x = seconds((datenum(datestr(data.ElapsedTime, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000);
@@ -69,20 +69,19 @@ else
     ylimit = max(B2(:,size(B2,2)))*1.2;
 end
 
-
-
+% set(gca, 'YScale', 'log')
 yyaxis left
 plot(x,B(:,size(B,2)),strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width)
 ylim([0 ylimit])
 marker_counter = marker_counter + 1;
 color_counter =color_counter+ 1;
 xlabel('Elapsed time (minutes)','FontSize',15);
-ylabel(ylabelscpu,'FontSize',15);
+ylabel(yredis,'FontSize',15);
 yyaxis right
 plot(x2,B2(:,size(B2,2)),strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width,'color',[0 0.7 0])
 ylim([0 ylimit])
 set(gca,'Yticklabel',[]) 
-% y2lbl= ylabel('Document operations per second','FontSize',15);
+y2lbl= ylabel('Document operations per second','FontSize',15);
 
 
 box on;
@@ -91,10 +90,10 @@ grid on;
 ax = gca;
 ax.YAxis(1).Exponent = 0;
 ax.YAxis(2).Exponent = 0;
-% ax.YAxis(1).Color = 'r';
-% ax.YAxis(2).Color = [0 0.7 0];
-ax.YAxis(1).Color = 'k';
-ax.YAxis(2).Color = 'k';
+ax.YAxis(1).Color = 'r';
+ax.YAxis(2).Color = [0 0.7 0];
+% ax.YAxis(1).Color = 'k';
+% ax.YAxis(2).Color = 'k';
 ax.GridLineStyle = ':';
 ax.GridAlpha = 0.3;
 ax.LineWidth = 0.9;
@@ -107,8 +106,8 @@ set(gca,'FontSize',16)
 
 legend('show');
 lgd = legend;
-%lgd.FontSize=7;
-lgd.Location = 'northWest';
+% lgd.FontSize=10;
+% lgd.Location = 'northWest';
 
 set(gcf,'Units','Inches');
 
@@ -120,9 +119,9 @@ set(gcf,'Units','Inches');
 % %title({'Network TX SUM: ingress (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 
 % title({'Memory Utilization MQTT 50K Threads','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'Database Operations MQTT 50K Threads','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+title({'Database Operations MQTT 50K Threads','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Node Command SUM: redis cluster (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-title({'CPU Utilization MQTT 50K Threads','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'CPU Utilization MQTT 50K Threads','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Network RX SUM: ingress (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 %title({'Network TX SUM: ingress (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 

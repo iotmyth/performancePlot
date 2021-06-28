@@ -1,6 +1,6 @@
 format longG
 clear all;close all;
-stringCSV = 'ResponseCodesPerSecond';
+stringCSV = 'BytesThroughputOverTime';
 dataID = '6';
 bytesDevider=1000000;
 bytesDevider=1;
@@ -29,7 +29,7 @@ ythread='Number of active threads';
 % legend_base_name = 'Worker-';
 legend_base_name = 'HTTP Request-';
 
-% set(gca, 'YScale', 'log')
+set(gca, 'YScale', 'log')
 
 % kalo ini format number dalam menit elapsed time
 x = (datenum(datestr(data{:,1}, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000/60;
@@ -44,17 +44,15 @@ if(size(data,2) == 2)
 end
 
 for i=1:size(data,2)-1
-    if(size(data,2) < 2)
+    if(size(data,2) <= 2)
         % ini untuk khusus yang 1 kolom saja
         scatter(x,data{:,i+1},strcat(colors{color_counter},markers{marker_counter}),'DisplayName',strcat(legend_base_name,sprintf('%.0f',i)));
     else
         if(strcmp(stringCSV, 'BytesThroughputOverTime') || strcmp(stringCSV,'ResponseCodesPerSecond') || strcmp(stringCSV,'TransactionsPerSecond'))
             marker_size = 12;
             markers = {'.'};
-%             colors = {'b','r'};
-%             colors = {'r','b',[0 0.7 0],'m'};
- colors = {'r','b',[0 0.7 0],'m','cyan','k',[0.1 0.6 0.6]};
-%             colors = {'r','b','k','m'};
+%             colors = {'r','b','g','m'};
+            colors = {'r','b','k','m'};
 % colors = {'k','r','b','c','m',[0 0.7 0]};
             ylabel(ylabels,'FontSize',14);
           plt(i) = plot(x,data{:,i+1}/bytesDevider,strcat(markers{marker_counter}),'MarkerSize',marker_size,'Color',colors{color_counter});
@@ -99,7 +97,6 @@ grid on;
 
 ax = gca;
 ax.YAxis.Exponent = 0;
-ax.YAxis.TickLabelFormat = '%.0f';
 ax.GridLineStyle = ':';
 ax.GridAlpha = 0.3;
 ax.LineWidth = 0.9;
@@ -109,8 +106,8 @@ set(gca,'FontSize',16);
 if(strcmp(stringCSV, 'BytesThroughputOverTime') || strcmp(stringCSV,'ResponseCodesPerSecond') || strcmp(stringCSV,'TransactionsPerSecond'))
 %    legend('Bytes received per second','Bytes sent per second');
 %     legend('HTTP failure','HTTP success');
-   legend('200 OK','502 Bad Gateway','504 Gateway Timeout','Non HTTP Timeout: java','Non HTTP Timeout: socket','Non HTTP Timeout','timeout');
-%  legend('200 OK','500 Internal Server Error','501 Not Implemented','502 Bad Gateway');
+%    legend('200 OK','502 Bad Gateway','504 Gateway Timeout','Non HTTP Timeout');
+ legend('200 OK','500 Internal Server Error','501 Not Implemented','502 Bad Gateway');
 % legend('MQTT Connect (failure)','MQTT Connect (success)','MQTT Disconnect (failure)','MQTT Disconnect (success)','MQTT Publish (failure)','MQTT Publish (success)','box','on');
 % gridLegend(plt,1,'location','north');
 % columnlegend(2,{'MQTT Connect (failure)','MQTT Connect (success)','MQTT Disconnect (failure)','MQTT Disconnect (success)','MQTT Publish (failure)','MQTT Publish (success)'},'Location','north');
@@ -122,26 +119,26 @@ lgd = legend;
 
 % lgd.FontSize=7;
 % lgd.Orientation='Horizontal';
-lgd.Location = 'northwest';
+% lgd.Location = 'northwest';
 % lgd.Location = 'south';
 set(gcf,'Units','Inches');
 
 % title({'Threads State over Time (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 % title({'HTTP Response Times over Time (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'HTTP Latencies over Time (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+title({'HTTP Latencies over Time (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 
-% title({'Threads State over Time (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'MQTT Response Times over Time (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'MQTT Latencies over Time (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Threads State over Time (1M Threads Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'MQTT Response Times over Time (1M Threads Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'MQTT Latencies over Time (1M Threads Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 
-% title({'Response Times Percentile (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'Transactions per second (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'Bytes Throughput over Time (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',15);
-title({'Response Codes per second (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Response Times Percentile (1M Threads Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Transactions per second (1M Threads Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Bytes Throughput over Time (1M Threads Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',15);
+% title({'Response Codes per second (1M Threads Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 
 xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',15);
 % xlabel('Percentiles (%)','FontSize',15);
-ylabel({ylabelsrescode},'FontSize',15);
+ylabel({ylabelslat},'FontSize',15);
 pos = get(gcf,'Position');
 set(findall(gcf,'-property','FontName'),'FontName','Times New Roman');
 set(gcf,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);
