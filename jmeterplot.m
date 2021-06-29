@@ -1,7 +1,7 @@
 format longG
 clear all;close all;
-stringCSV = 'ResponseCodesPerSecond';
-dataID = '6';
+stringCSV = 'thread';
+dataID = '8';
 bytesDevider=1000000;
 bytesDevider=1;
 data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/',dataID,'/', stringCSV,'.csv'), 'ReadVariableNames', false, 'HeaderLines', 1);
@@ -11,7 +11,7 @@ data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/
 % x.Format = 'hh:mm:ss';
 
 markers = {'+','*','.','o','x','v','d','^','s','>','<','v','p','h','p','v','<','>','s','^','d','v','x','o','.','*'};
-colors = {'r','b','m','k','y','c','g','r','b','m','k','y'};
+colors = {'r','b','m','k','y','c',[0 0.7 0],'r','b','m','k','y'};
 lines = {'-','--',':','-.',':','--'};
 line_width = 0.9;
 marker_size = 5;
@@ -46,7 +46,7 @@ end
 for i=1:size(data,2)-1
     if(size(data,2) < 2)
         % ini untuk khusus yang 1 kolom saja
-        scatter(x,data{:,i+1},strcat(colors{color_counter},markers{marker_counter}),'DisplayName',strcat(legend_base_name,sprintf('%.0f',i)));
+        scatter(x,data{:,i+1},strcat('',markers{marker_counter}),'Color',colors{color_counter},'DisplayName',strcat(legend_base_name,sprintf('%.0f',i)));
     else
         if(strcmp(stringCSV, 'BytesThroughputOverTime') || strcmp(stringCSV,'ResponseCodesPerSecond') || strcmp(stringCSV,'TransactionsPerSecond'))
             marker_size = 12;
@@ -63,7 +63,7 @@ for i=1:size(data,2)-1
        
 %              markers = {''};
 %              lines = {'--','-.','-'};
-            plot(x,data{:,i+1},strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width,'DisplayName',strcat(legend_base_name,sprintf('%.0f',i)));
+            plot(x,data{:,i+1},strcat(lines{line_counter},strcat('',markers{marker_counter})),'Color',colors{color_counter},'MarkerSize',marker_size,'LineWidth',line_width,'DisplayName',strcat(legend_base_name,sprintf('%.0f',i)));
 
 % UNTUK MQTT YANG DATA RANGE JAUH
 % marker_size = 8;
@@ -120,28 +120,28 @@ end
 legend('show');
 lgd = legend;
 
-% lgd.FontSize=7;
+lgd.FontSize=6;
 % lgd.Orientation='Horizontal';
 lgd.Location = 'northwest';
 % lgd.Location = 'south';
 set(gcf,'Units','Inches');
 
-% title({'Threads State over Time (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'HTTP Response Times over Time (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'HTTP Latencies over Time (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Threads State over Time (1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'HTTP Response Times over Time (1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'HTTP Latencies over Time (1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
 
-% title({'Threads State over Time (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'MQTT Response Times over Time (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'MQTT Latencies over Time (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+title({'Threads State over Time (1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'MQTT Response Times over Time (1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'MQTT Latencies over Time (1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
 
-% title({'Response Times Percentile (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'Transactions per second (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'Bytes Throughput over Time (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',15);
-title({'Response Codes per second (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Response Times Percentile (1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'Transactions per second (1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'Bytes Throughput over Time (1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',15);
+% title({'Response Codes per second (1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
 
 xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',15);
 % xlabel('Percentiles (%)','FontSize',15);
-ylabel({ylabelsrescode},'FontSize',15);
+ylabel({ythread},'FontSize',15);
 pos = get(gcf,'Position');
 set(findall(gcf,'-property','FontName'),'FontName','Times New Roman');
 set(gcf,'PaperPositionMode','Auto','PaperUnits','Inches','PaperSize',[pos(3), pos(4)]);

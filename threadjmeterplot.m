@@ -1,16 +1,17 @@
 format longG
 clear all;close all;
-stringCSV = 'thread6';
-dataID = '6';
+stringCSV = 'thread';
+dataID = '8';
 data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/',dataID,'/',strcat(stringCSV,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 1);
 
 % ini untuk format date seperti halnya di jmeter ya
 % x = seconds((datenum(datestr(data.ElapsedTime, 'yyyy-mm-dd hh:MM:ss.fff')) - datenum(datestr(data{1,1}, 'yyyy-mm-dd hh:MM:ss.fff'))) * 100000);
 % x.Format = 'hh:mm:ss';
 
-markers = {'.','*','.','o','x','v','d','^','s','>','<','v','p','h','p','v','<','>','s','^','d','v','x','o','.','*'};
-colors = {'r','b','m','k','y','c','g','r','b','m','k','y'};
-lines = {'-','--',':','-.',':','--'};
+% markers = {'.','*','.','o','x','v','d','^','s','>','<','v','p','h','p','v','<','>','s','^','d','v','x','o','.','*'};
+colors = {'r','b','m','k','y','c',[0 0.7 0],'r','b','m','k','y'};
+markers = {''};
+lines = {'-'};
 line_width = 0.9;
 marker_size = 5;
 marker_counter = 1;
@@ -49,7 +50,7 @@ if(size(data,2) == 2)
     ylabel(ylabels,'FontSize',14);
 end
 
-plot(x,B(:,size(B,2)),strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width,'DisplayName',strcat(legend_base_name,''));
+plot(x,B(:,size(B,2)),strcat(lines{line_counter},strcat('',markers{marker_counter})),'Color',colors{color_counter},'MarkerSize',marker_size,'LineWidth',line_width,'DisplayName',strcat(legend_base_name,''));
 
 box on;
 grid on;
@@ -72,11 +73,11 @@ lgd = legend;
 
 set(gcf,'Units','Inches');
 
-% title({'SUM Threads State over Time (50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-title({'SUM Threads State over Time (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'HTTP Response Times over Time (50K RPS)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'HTTP Latencies over Time (50K RPS)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'Bytes Throughput over Time (50K RPS)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',15);
+% title({'SUM Threads State over Time (50K Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+title({'SUM Threads State over Time (1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'HTTP Response Times over Time (50K RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'HTTP Latencies over Time (50K RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'Bytes Throughput over Time (50K RPS)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',15);
 
 xlabel('Elapsed time (minutes), Granulation: 500 ms','FontSize',15);
 ylabel(ylabelslat,'FontSize',15);
