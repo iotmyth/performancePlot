@@ -109,7 +109,7 @@ set(gca,'FontSize',16);
 if(strcmp(stringCSV, 'BytesThroughputOverTime') || strcmp(stringCSV,'ResponseCodesPerSecond') || strcmp(stringCSV,'TransactionsPerSecond'))
 %    legend('Bytes received per second','Bytes sent per second');
 %     legend('HTTP failure','HTTP success');
-   legend('200 OK','502 Bad Gateway','504 Gateway Timeout','Non HTTP Timeout: java','Non HTTP Timeout: socket','Non HTTP Timeout','timeout');
+   legend('200 OK','502 Bad Gateway','504 Gateway Timeout','Non HTTP: java','Non HTTP: socket','Non HTTP Timeout','timeout');
 %  legend('200 OK','500 Internal Server Error','501 Not Implemented','502 Bad Gateway');
 % legend('MQTT Connect (failure)','MQTT Connect (success)','MQTT Disconnect (failure)','MQTT Disconnect (success)','MQTT Publish (failure)','MQTT Publish (success)','box','on');
 % gridLegend(plt,1,'location','north');

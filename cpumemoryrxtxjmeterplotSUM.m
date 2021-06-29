@@ -1,10 +1,10 @@
 format longG
 
-stringCSV = 'CPU-data-as-seriestocolumns-2021-06-05 00_07_36';
+stringCSV = 'Network TX-data-as-seriestocolumns-2021-06-05 00_26_23';
 bytesDevider = 1000000;
-bytesDevider = 1;
-dataID = '5';
-namespace = 'redis';
+% bytesDevider = 1;
+dataID = '6';
+namespace = 'ingress';
 data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/',dataID,'/',namespace,'/',strcat(stringCSV,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
 
 
@@ -80,23 +80,23 @@ lgd = legend;
 
 set(gcf,'Units','Inches');
 
-% title({'Node Memory SUM: redis cluster (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'Node Command SUM: redis cluster (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'CPU SUM: emqx (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'Memory SUM: emqx (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'Network RX SUM: emqx (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'Network TX SUM: emqx (HTTP 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Node Memory SUM: redis cluster (HTTP 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+%title({'Node Command SUM: redis cluster (HTTP 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'CPU SUM: ingress (HTTP 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Memory SUM: ingress (HTTP 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Network RX SUM: ingress (HTTP 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+title({'Network TX SUM: ingress (HTTP 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 
-% title({'Node Memory SUM: redis cluster (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'Node Command SUM: redis cluster (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'CPU SUM: ingress (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'Memory SUM: ingress (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'Network RX SUM: ingress (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'Network TX SUM: ingress (MQTT 50K Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Node Memory SUM: redis cluster (MQTT 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+%title({'Node Command SUM: redis cluster (MQTT 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'CPU SUM: ingress (MQTT 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Memory SUM: ingress (MQTT 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Network RX SUM: ingress (MQTT 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Network TX SUM: ingress (MQTT 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
 
 
 xlabel('Elapsed time (minutes)','FontSize',15);
-ylabel(ylabelscpu,'FontSize',15);
+ylabel(ylabelstruput,'FontSize',15);
 % ylim([0,max(B(:,size(B,2)))*1.2])
 % xlim([min(x),max(x)])
 pos = get(gcf,'Position');
