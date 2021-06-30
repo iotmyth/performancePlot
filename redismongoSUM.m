@@ -1,10 +1,10 @@
 format longG
 clear all;close all;
-stringREDIS = 'Commands Executed _ sec-data-as-seriestocolumns-2021-06-14 05_46_52';
-stringMONGO = 'Document Operations-data-as-seriestocolumns-2021-06-14 06_40_24';
+stringREDIS = 'Commands Executed _ sec-data-as-seriestocolumns-2021-06-14 05_55_56';
+stringMONGO = 'Document Operations-data-as-seriestocolumns-2021-06-14 08_39_05';
 bytesDevider = 1000000;
 bytesDevider = 1;
-dataID = '6';
+dataID = '10';
 data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/',dataID,'/redis/cluster/',strcat(stringREDIS,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
 data2 = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/',dataID,'/mongo/sharded/',strcat(stringMONGO,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
 
@@ -111,23 +111,23 @@ lgd = legend;
 
 set(gcf,'Units','Inches');
 
-% title({'Memory Utilization HTTP 1M Threads','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-title({'Database Operations HTTP 1M Threads','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% %title({'Node Command SUM: redis cluster (HTTP 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'CPU Utilization HTTP 1M Threads','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% %title({'Network RX SUM: ingress (HTTP 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% %title({'Network TX SUM: ingress (HTTP 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Memory Utilization HTTP 1M Threads','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'Database Operations HTTP 1M Threads','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% %title({'Node Command SUM: redis cluster (HTTP 1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'CPU Utilization HTTP 1M Threads','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% %title({'Network RX SUM: ingress (HTTP 1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% %title({'Network TX SUM: ingress (HTTP 1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
 
-% title({'Memory Utilization MQTT 1M Threads','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'Database Operations MQTT 1M Threads','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'Node Command SUM: redis cluster (MQTT 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'CPU Utilization MQTT 1M Threads','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'Network RX SUM: ingress (MQTT 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'Network TX SUM: ingress (MQTT 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Memory Utilization HTTP 1M Threads','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+title({'Database Operations MQTT 1M Threads','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'Node Command SUM: redis cluster (MQTT 1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'CPU Utilization MQTT 1M Threads','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'Network RX SUM: ingress (MQTT 1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'Network TX SUM: ingress (MQTT 1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
 
-%title({'HTTP Response Times over Time (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'HTTP Latencies over Time (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'Bytes Throughput over Time (1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',15);
+%title({'HTTP Response Times over Time (1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'HTTP Latencies over Time (1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'Bytes Throughput over Time (1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',15);
 
 
 % ylim([0,max(B(:,size(B,2)))*1.2]);

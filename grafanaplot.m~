@@ -1,10 +1,10 @@
 format longG
 clear all;close all;
-stringCSV = 'Network RX-data-as-seriestocolumns-2021-06-05 00_26_10';
+stringCSV = 'Pod Count-data-2021-06-05 00_51_55';
 bytesDevider = 1000000;
-% bytesDevider = 1;
-dataID = '6';
-namespace = 'redis';
+bytesDevider = 1;
+dataID = '8';
+namespace = 'ingress';
 data = readtable(strcat(strcat(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_grafana/',dataID),'/'),strcat(strcat(strcat(namespace,'/'),stringCSV),'.csv')), 'ReadVariableNames', false, 'HeaderLines', 2);
 
 % ini untuk format date seperti halnya di jmeter ya
@@ -13,7 +13,7 @@ data = readtable(strcat(strcat(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPS
 
 markers = {'+','*','.','o','x','v','d','^','s','>','<','v','p','h','p','v','<','>','s','^','d','v','x','o','.','*'};
 % markers = {'.','^'};
-colors = {'r','b','m','k','g','c','y','r','b','m','k','g'};
+colors = {'r','b','m','k',[0 0.7 0],'c','y','r','b','m','k',[0 0.7 0]};
 lines = {'-','-.','--',':',':','--'};
 line_width = 0.9;
 marker_size = 2.8;
@@ -31,7 +31,7 @@ ylabelstruput='Mega Bytes (MB) per second';
 ylabels3='TCP connections';
 yredis='Command executed per second';
 ythread='Number of active threads';
-legend_base_name = 'ingress-pod-';
+legend_base_name = 'ingress-pods-';
 %legend_base_name = 'Worker-';
 % legend_base_name = 'redis-node-';
 % legend_base_name = 'iotmyth-cpu-';
@@ -51,7 +51,7 @@ if(size(data,2) == 2)
 end
 
 for i=1:size(data,2)-1
-            plot(x,data{:,i+1}/bytesDevider,strcat(lines{line_counter},strcat(colors{color_counter},markers{marker_counter})),'MarkerSize',marker_size,'LineWidth',line_width,'DisplayName',strcat(legend_base_name,sprintf('%.0f',i)));
+            plot(x,data{:,i+1}/bytesDevider,strcat(lines{line_counter},strcat('',markers{marker_counter})),'Color',colors{color_counter},'MarkerSize',marker_size,'LineWidth',line_width,'DisplayName',strcat(legend_base_name,sprintf('%.0f',i)));
 
       if mod(i,  size(markers,2)) == 0
          marker_counter = 1;
@@ -86,37 +86,37 @@ set(gca,'FontSize',16);
 % legend('long unregistered','not started','ready','unready','unregistered');
 legend('show');
 lgd = legend;
-lgd.FontSize=10;
-% lgd.Location = 'eastoutside';
+% lgd.FontSize=10;
+% lgd.Location = 'northwest';
 % lgd.Location = 'north';
 
 
 set(gcf,'Units','Inches');
 
-% title({'Pod Count: redis (HTTP 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'CPU SUM: ingress (HTTP 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'CPU: ingress (HTTP 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'Memory: ingress (HTTP 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'Node Command: redis cluster (HTTP 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'Node scaling (HTTP 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'Network RX: ingress (HTTP 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'Network TX: ingress (HTTP 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'Network Load Balancer (HTTP 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+% title({'Pod Count: ingress (HTTP 1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'CPU SUM: ingress (HTTP 1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'CPU: ingress (HTTP 1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'Memory: ingress (HTTP 1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'Node Command: redis cluster (HTTP 1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'Node scaling (HTTP 1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'Network RX: ingress (HTTP 1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'Network TX: ingress (HTTP 1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'Network Load Balancer (HTTP 1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
 
-% title({'Pod Count: i (MQTT 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'CPU SUM: ingress (MQTT 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'CPU: redis (MQTT 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'Memory: ingress (MQTT 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'Node Memory: redis cluster (MQTT 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'Node Command: redis cluster (MQTT 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'Node scaling (MQTT 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'Network RX: ingress (MQTT 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-% title({'Network TX: ingress (MQTT 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
-%title({'Network Load Balancer (MQTT 1M Threads)','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+title({'Pod Count: ingress (MQTT 1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'CPU SUM: ingress (MQTT 1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'CPU: redis (MQTT 1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'Memory: ingress (MQTT 1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'Node Memory: redis cluster (MQTT 1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'Node Command: redis cluster (MQTT 1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'Node scaling (MQTT 1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'Network RX: ingress (MQTT 1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+% title({'Network TX: ingress (MQTT 1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
+%title({'Network Load Balancer (MQTT 1M Threads)','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
 
 
 xlabel('Elapsed time (minutes)','FontSize',15);
-ylabel(ylabelstruput,'FontSize',15);
+ylabel(ylabelspod,'FontSize',15);
 pos = get(gcf,'Position');
 ymax = max(data{:,2});
 ylim([0,ymax(1)*1.2])

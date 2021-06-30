@@ -1,8 +1,8 @@
 format longG
 
 clear all;close all;
-stringCSV = 'rtd';
-dataID = '6';
+stringCSV = 'ResponseTimesDistribution';
+dataID = '9';
 data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/',dataID,'/',strcat(stringCSV,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 1);
 
 markers = {'+','*','.','o','x','v','d','^','s','>','<','v','p','h','p','v','<','>','s','^','d','v','x','o','.','*'};
@@ -27,7 +27,7 @@ y = data{:,2};
 hold on
 
 set(gca, 'YScale', 'log')
-% set(gca, 'XScale', 'log')
+set(gca, 'XScale', 'log')
 stem(x,y,'DisplayName','HTTP Request');
 % p(1) = stem(x,y,'r','DisplayName','MQTT Connect');
 % p(2) = stem(x,y1,'Color',[0 0.7 0],'DisplayName','MQTT Disconnect');
@@ -52,7 +52,7 @@ set(gca,'FontSize',16)
 
 
 
-title({'Response Times Distribution','Instance Type (m5.xlarge/m5a.xlarge)'},'FontSize',14);
+title({'Response Times Distribution','Instance Type (m5.2xlarge/m5a.2xlarge)'},'FontSize',14);
 xlabel(ylabels,'FontSize',15);
 ylabel('Number of responses','FontSize',15);
 % ylabel('\boldmath \bf{$\log _{10} (Number\, of\, responses)$}','FontSize',15,'interpreter','latex','FontWeight', 'bold');

@@ -1,7 +1,7 @@
 format longG
 clear all;close all;
-stringCSV = 'thread';
-dataID = '8';
+stringCSV = 'thread9';
+dataID = '9';
 data = readtable(strcat('/Users/mymac/Documents/SCRIPTSHEET/SKRIPSI/data_jmeter/',dataID,'/',strcat(stringCSV,'.csv')), 'ReadVariableNames', false, 'HeaderLines', 1);
 
 % ini untuk format date seperti halnya di jmeter ya
@@ -68,7 +68,7 @@ if(strcmp(stringCSV, 'BytesThroughputOverTime') || strcmp(stringCSV,'ResponseCod
 end
 legend('show');
 lgd = legend;
-%lgd.FontSize=7;
+lgd.FontSize=10;
 %lgd.Location = 'northWest';
 
 set(gcf,'Units','Inches');
